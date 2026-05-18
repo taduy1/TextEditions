@@ -206,7 +206,7 @@ d"></textarea>
         <div class="output-box">
             <h3>🔄 Duplicate</h3>
             <div id="duplicateResult" class="result-area"></div>
-            <div class="stats" id="duplicateStats">Tổng số: 0</div>
+            <div class="stats" id="duplicateStats">All: 0</div>
         </div>
         <div class="output-box">
             <h3>✨ No dupicate.</h3>
@@ -314,9 +314,9 @@ d"></textarea>
         const statsSpan = document.getElementById(statsId);
 
         if (!dataArray || dataArray.length === 0) {
-            container.innerHTML = '✨ Không có dữ liệu hoặc không tìm thấy kết quả.';
+            container.innerHTML = '✨ No data or no results found.';
             container.classList.add('empty');
-            statsSpan.innerHTML = `Tổng số: 0`;
+            statsSpan.innerHTML = `All: 0`;
             return;
         }
 
@@ -327,7 +327,7 @@ d"></textarea>
         }
         container.innerHTML = html.replace(/\n/g, '<br>');
         container.classList.remove('empty');
-        statsSpan.innerHTML = `Tổng số: ${dataArray.length}`;
+        statsSpan.innerHTML = `All: ${dataArray.length}`;
     }
 
     function escapeHtml(str) {
