@@ -1,7 +1,7 @@
 <html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>So sánh 2 danh sách - Không phân biệt hoa/thường</title>
+    <title>Comparing 2 lists - 3 results</title>
     <style>
         * {
             box-sizing: border-box;
@@ -105,7 +105,7 @@
         }
         .output-box {
             flex: 1;
-            min-width: 250px;
+            min-width: 280px;
             background: white;
             border-radius: 12px;
             padding: 20px;
@@ -152,139 +152,171 @@
             color: #888;
             font-size: 13px;
         }
-        @media (max-width: 700px) {
-            .input-row, .output-row {
+        @media (max-width: 900px) {
+            .output-row {
                 flex-direction: column;
             }
+        }
+        .highlight-note {
+            background: #e8f0fe;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #1a73e8;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📋 So sánh 2 danh sách (không phân biệt chữ hoa/thường)</h1>
+    <h1>📋 Compare two lists (case-insensitive).</h1>
 
     <div class="input-row">
         <div class="input-box">
-            <h3>📝 Danh sách 1</h3>
-            <label>Nhập mỗi dòng một giá trị:</label>
+            <h3>📝 List 1</h3>
+            <label>Enter a value for each line: </label>
             <textarea id="list1" placeholder="Ví dụ:
-Apple
-Banana
-Orange
-Grape"></textarea>
+a
+b
+c"></textarea>
             <div class="button-group">
-                <button onclick="clearTextarea('list1')">Xóa List 1</button>
-                <button class="secondary" onclick="loadExample()">Tải ví dụ</button>
+                <button onclick="clearTextarea('list1')">Delete</button>
+                <button class="secondary" onclick="loadExample()">Exp</button>
             </div>
         </div>
         <div class="input-box">
-            <h3>📝 Danh sách 2</h3>
-            <label>Nhập mỗi dòng một giá trị:</label>
+            <h3>📝 List 2</h3>
+            <label>Enter a value for each line:</label>
             <textarea id="list2" placeholder="Ví dụ:
-apple
-BANANA
-Orange
-Mango"></textarea>
+A
+b
+c
+d"></textarea>
             <div class="button-group">
-                <button onclick="clearTextarea('list2')">Xóa List 2</button>
+                <button onclick="clearTextarea('list2')">Delete</button>
             </div>
         </div>
     </div>
 
     <div style="text-align: center; margin-bottom: 20px;">
-        <button onclick="compareLists()" style="padding: 12px 32px; font-size: 16px;">🔍 So sánh ngay</button>
+        <button onclick="compareLists()" style="padding: 12px 32px; font-size: 16px;">🔍Start</button>
     </div>
 
     <div class="output-row">
         <div class="output-box">
-            <h3>🔄 DÒNG TRÙNG NHAU <span>(có trong cả 2 list, không phân biệt hoa/thường)</span></h3>
+            <h3>🔄 Duplicate</h3>
             <div id="duplicateResult" class="result-area"></div>
-            <div class="stats" id="duplicateStats">Tổng số dòng trùng: 0</div>
+            <div class="stats" id="duplicateStats">Tổng số: 0</div>
         </div>
         <div class="output-box">
-            <h3>✨ DÒNG KHÔNG TRÙNG <span>(chỉ có ở 1 trong 2 list)</span></h3>
-            <div id="nonDuplicateResult" class="result-area"></div>
-            <div class="stats" id="nonDuplicateStats">Tổng số dòng không trùng: 0</div>
+            <h3>✨ No dupicate.</h3>
+            <div id="nonDuplicateAllResult" class="result-area"></div>
+            <div class="stats" id="nonDuplicateAllStats">All: 0</div>
+        </div>
+        <div class="output-box">
+            <h3>🔹 AntiDuplicates </h3>
+            <div id="mergedUniqueResult" class="result-area"></div>
+            <div class="stats" id="mergedUniqueStats">All: 0</div>
         </div>
     </div>
     <div class="footer">
-        💡 Lưu ý: So sánh KHÔNG phân biệt chữ hoa/thường.<br>
-        📌 "Dòng trùng" = nội dung giống nhau (không phân biệt hoa/thường).<br>
-        📌 "Dòng không trùng" = chỉ xuất hiện ở 1 trong 2 danh sách.
+        💡 Comparison is not case-sensitive..<br>
+        📌Result: Duplicate.<br>
+        📌Result 1: No dupicate.<br>
+        📌Result 2: AntiDuplicates
     </div>
 </div>
 
 <script>
-    // Lấy các dòng không rỗng, giữ nguyên nội dung gốc
-    function getLinesOriginal(textareaId) {
+    function getLines(textareaId) {
         const text = document.getElementById(textareaId).value;
         const lines = text.split(/\r?\n/);
         return lines.filter(line => line.trim() !== '');
     }
 
-    // Lấy các dòng đã chuẩn hóa thành chữ thường để so sánh
-    function getLinesNormalized(textareaId) {
-        const original = getLinesOriginal(textareaId);
-        return original.map(line => line.toLowerCase());
-    }
-
     function compareLists() {
-        const list1Original = getLinesOriginal('list1');
-        const list2Original = getLinesOriginal('list2');
+        const list1 = getLines('list1');
+        const list2 = getLines('list2');
         
-        const list1Lower = list1Original.map(item => item.toLowerCase());
-        const list2Lower = list2Original.map(item => item.toLowerCase());
+        // Map lower -> danh sách các giá trị gốc
+        const map1Lower = new Map();
+        const map2Lower = new Map();
         
-        const set1Lower = new Set(list1Lower);
-        const set2Lower = new Set(list2Lower);
+        for (const item of list1) {
+            const lower = item.toLowerCase();
+            if (!map1Lower.has(lower)) map1Lower.set(lower, []);
+            map1Lower.get(lower).push(item);
+        }
         
-        // 1. Dòng trùng (dựa trên so sánh không phân biệt hoa/thường)
-        // Hiển thị theo phiên bản gốc xuất hiện đầu tiên trong list1
+        for (const item of list2) {
+            const lower = item.toLowerCase();
+            if (!map2Lower.has(lower)) map2Lower.set(lower, []);
+            map2Lower.get(lower).push(item);
+        }
+        
+        // 1. Dòng trùng (tất cả lần xuất hiện)
         const duplicates = [];
-        const seenDuplicateLower = new Set();
+        for (const item of list1) {
+            const lower = item.toLowerCase();
+            if (map2Lower.has(lower)) duplicates.push(item);
+        }
+        for (const item of list2) {
+            const lower = item.toLowerCase();
+            if (map1Lower.has(lower)) duplicates.push(item);
+        }
         
-        for (let i = 0; i < list1Original.length; i++) {
-            const lowerVal = list1Lower[i];
-            if (set2Lower.has(lowerVal) && !seenDuplicateLower.has(lowerVal)) {
-                duplicates.push(list1Original[i]); // giữ nguyên bản gốc từ list1
-                seenDuplicateLower.add(lowerVal);
+        // 2. Dòng không trùng (tất cả lần xuất hiện)
+        const nonDuplicatesAll = [];
+        for (const item of list1) {
+            const lower = item.toLowerCase();
+            if (!map2Lower.has(lower)) nonDuplicatesAll.push(item);
+        }
+        for (const item of list2) {
+            const lower = item.toLowerCase();
+            if (!map1Lower.has(lower)) nonDuplicatesAll.push(item);
+        }
+        
+        // 3. Hợp nhất 2 list, bỏ trùng (theo lower), ưu tiên chữ hoa
+        const mergedMap = new Map(); // key: lower, value: ưu tiên chữ hoa nhất
+        
+        const allItems = [...list1, ...list2];
+        for (const item of allItems) {
+            const lower = item.toLowerCase();
+            if (!mergedMap.has(lower)) {
+                mergedMap.set(lower, item);
+            } else {
+                // Nếu đã tồn tại, ưu tiên giữ cái có chứa chữ hoa (ưu tiên chữ hoa đầu tiên)
+                const existing = mergedMap.get(lower);
+                if (existing !== item && /[A-Z]/.test(item) && !/[A-Z]/.test(existing)) {
+                    mergedMap.set(lower, item);
+                }
             }
         }
         
-        // 2. Dòng không trùng (chỉ có ở list1 hoặc chỉ có ở list2)
-        const nonDuplicates = [];
-        const addedNonDupLower = new Set();
-        
-        // Chỉ có ở list1
-        for (let i = 0; i < list1Original.length; i++) {
-            const lowerVal = list1Lower[i];
-            if (!set2Lower.has(lowerVal) && !addedNonDupLower.has(lowerVal)) {
-                nonDuplicates.push(list1Original[i]);
-                addedNonDupLower.add(lowerVal);
+        // Giữ đúng thứ tự xuất hiện lần đầu trong allItems nhưng đã lọc trùng
+        const mergedUnique = [];
+        const seen = new Set();
+        for (const item of allItems) {
+            const lower = item.toLowerCase();
+            if (!seen.has(lower)) {
+                seen.add(lower);
+                mergedUnique.push(mergedMap.get(lower));
             }
         }
         
-        // Chỉ có ở list2
-        for (let i = 0; i < list2Original.length; i++) {
-            const lowerVal = list2Lower[i];
-            if (!set1Lower.has(lowerVal) && !addedNonDupLower.has(lowerVal)) {
-                nonDuplicates.push(list2Original[i]);
-                addedNonDupLower.add(lowerVal);
-            }
-        }
-        
-        displayResult('duplicateResult', duplicates, 'duplicateStats', 'dòng trùng');
-        displayResult('nonDuplicateResult', nonDuplicates, 'nonDuplicateStats', 'dòng không trùng');
+        displayResult('duplicateResult', duplicates, 'duplicateStats');
+        displayResult('nonDuplicateAllResult', nonDuplicatesAll, 'nonDuplicateAllStats');
+        displayResult('mergedUniqueResult', mergedUnique, 'mergedUniqueStats');
     }
 
-    function displayResult(elementId, dataArray, statsId, label) {
+    function displayResult(elementId, dataArray, statsId) {
         const container = document.getElementById(elementId);
         const statsSpan = document.getElementById(statsId);
 
         if (!dataArray || dataArray.length === 0) {
             container.innerHTML = '✨ Không có dữ liệu hoặc không tìm thấy kết quả.';
             container.classList.add('empty');
-            statsSpan.innerHTML = `Tổng số ${label}: 0`;
+            statsSpan.innerHTML = `Tổng số: 0`;
             return;
         }
 
@@ -295,7 +327,7 @@ Mango"></textarea>
         }
         container.innerHTML = html.replace(/\n/g, '<br>');
         container.classList.remove('empty');
-        statsSpan.innerHTML = `Tổng số ${label}: ${dataArray.length}`;
+        statsSpan.innerHTML = `Tổng số: ${dataArray.length}`;
     }
 
     function escapeHtml(str) {
@@ -312,8 +344,8 @@ Mango"></textarea>
     }
 
     function loadExample() {
-        document.getElementById('list1').value = 'Apple\nBanana\nOrange\nGrape\nMango';
-        document.getElementById('list2').value = 'apple\nBANANA\nOrange\nPineapple\nGrapE';
+        document.getElementById('list1').value = 'a\nb\nc';
+        document.getElementById('list2').value = 'A\nb\nc\nd';
         compareLists();
     }
 
