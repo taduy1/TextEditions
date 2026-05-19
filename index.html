@@ -303,6 +303,22 @@
             padding: 48px 20px;
             font-style: italic;
         }
+        .tld-stats {
+            background: #eef2ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e40af;
+            display: inline-block;
+            margin: 4px;
+        }
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -372,7 +388,7 @@ d"></textarea>
         </div>
     </div>
 
-    <!-- TAB 2: EMAIL DOMAIN SORTER - Dạng TEXT THUẦN (không phân nhóm) -->
+    <!-- TAB 2: EMAIL DOMAIN SORTER - Dạng TEXT THUẦN (không phân nhóm) + Hiển thị số lượng theo TLD -->
     <div id="tab2" class="tab-pane">
         <div class="sorter-container">
             <div class="sorter-header">
@@ -410,9 +426,9 @@ d"></textarea>
                     <div id="emailResultArea" class="result-area" style="min-height: 320px; font-family: 'Consolas', monospace;">
                         <div class="empty-state">✨ Nhập danh sách email và nhấn "Sắp xếp"<br>📌 Kết quả là danh sách email dạng text thuần</div>
                     </div>
-                    <div class="stats" style="padding: 10px 20px; display: flex; justify-content: space-between;">
+                    <div class="stats" style="padding: 10px 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                         <span>📬 Email hợp lệ: <strong id="validCount">0</strong></span>
-                        <span>📝 Đã sắp xếp: <strong id="sortedCount">0</strong></span>
+                        <div id="tldStatsContainer" class="stats-container"></div>
                     </div>
                 </div>
             </div>
@@ -518,7 +534,7 @@ d"></textarea>
         compareLists();
     }
 
-    // ========== 2. CODE CHO EMAIL SORTER - TEXT THUẦN (KHÔNG PHÂN NHÓM) ==========
+    // ========== 2. CODE CHO EMAIL SORTER - TEXT THUẦN + HIỂN THỊ SỐ LƯỢNG TLD ==========
     // Lấy domain từ email
     function extractDomainFromEmail(email) {
         if (!email || typeof email !== 'string') return null;
@@ -564,13 +580,10 @@ d"></textarea>
     function sortEmails(emailsArray, sortType) {
         const sorted = [...emailsArray];
         if (sortType === 'alpha') {
-            // Sắp xếp theo domain A->Z
             sorted.sort((a, b) => a.domain.localeCompare(b.domain));
         } else if (sortType === 'reverse') {
-            // Sắp xếp theo domain Z->A
             sorted.sort((a, b) => b.domain.localeCompare(a.domain));
         } else if (sortType === 'tld_alpha') {
-            // Sắp xếp theo TLD trước, sau đó đến domain
             sorted.sort((a, b) => {
                 if (a.tld !== b.tld) return a.tld.localeCompare(b.tld);
                 return a.domain.localeCompare(b.domain);
@@ -579,13 +592,42 @@ d"></textarea>
         return sorted;
     }
     
+    // Đếm số lượng theo từng TLD
+    function countTLD(emailsArray) {
+        const tldMap = new Map();
+        for (const item of emailsArray) {
+            const tld = item.tld;
+            tldMap.set(tld, (tldMap.get(tld) || 0) + 1);
+        }
+        // Sắp xếp TLD theo alphabet để hiển thị đẹp
+        return new Map([...tldMap.entries()].sort((a, b) => a[0].localeCompare(b[0])));
+    }
+    
+    // Hiển thị thống kê TLD
+    function displayTLDStats(emailsArray) {
+        const tldStats = countTLD(emailsArray);
+        const container = document.getElementById('tldStatsContainer');
+        if (!container) return;
+        
+        if (tldStats.size === 0) {
+            container.innerHTML = '';
+            return;
+        }
+        
+        let html = '<span style="font-size:0.75rem; color:#475569;">🏷️TLD:</span> ';
+        for (const [tld, count] of tldStats.entries()) {
+            html += `<span class="tld-stats">.${tld}: ${count}</span>`;
+        }
+        container.innerHTML = html;
+    }
+    
     // Hiển thị kết quả dạng TEXT THUẦN (mỗi dòng 1 email)
     function renderTextResult(sortedEmails) {
         const container = document.getElementById('emailResultArea');
         if (!sortedEmails || sortedEmails.length === 0) {
             container.innerHTML = '<div class="empty-state">📭 Không có email hợp lệ nào. Hãy nhập danh sách email.</div>';
             document.getElementById('validCount').innerText = '0';
-            document.getElementById('sortedCount').innerText = '0';
+            displayTLDStats([]);
             return;
         }
         
@@ -597,7 +639,9 @@ d"></textarea>
         // Hiển thị dạng pre-wrap để giữ nguyên format
         container.innerHTML = `<div class="text-result" style="white-space: pre-wrap; font-family: 'Consolas', monospace;">${escapeHtml(textResult)}</div>`;
         document.getElementById('validCount').innerText = sortedEmails.length;
-        document.getElementById('sortedCount').innerText = sortedEmails.length;
+        
+        // Hiển thị thống kê TLD
+        displayTLDStats(sortedEmails);
     }
     
     let lastSortedEmails = []; // lưu kết quả để copy
@@ -625,7 +669,7 @@ d"></textarea>
     
     function copyEmailOutput() {
         if (!lastSortedEmails || lastSortedEmails.length === 0) {
-            showToast('📭 Không có dữ liệu để copy!');
+            showToast('📭 Không có dữ liệu!');
             return;
         }
         let plainText = '';
@@ -633,7 +677,7 @@ d"></textarea>
             plainText += item.email + '\n';
         }
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(plainText.trim()).then(() => showToast('✅ Đã copy danh sách email đã sắp xếp')).catch(() => fallbackCopyEmail(plainText));
+            navigator.clipboard.writeText(plainText.trim()).then(() => showToast('✅ Đã copy')).catch(() => fallbackCopyEmail(plainText));
         } else { fallbackCopyEmail(plainText); }
     }
     
@@ -657,21 +701,7 @@ d"></textarea>
     }
     
     function loadEmailExample() {
-        document.getElementById('emailInput').value = `alice@work.com
-bob@startup.vn
-carol@university.edu.vn
-david@company.org
-emily@tech.co.uk
-frank@global.net
-grace@shop.vn
-henry@agency.com.vn
-iris@dev.io
-jack@example.org
-kate@hospitality.vn
-leo@edu.vn
-maria@company.com
-nina@store.com.vn
-oscar@cloud.net`;
+        document.getElementById('emailInput').value = ``;
         updateEmailStats();
         processEmailSort();
     }
@@ -681,7 +711,7 @@ oscar@cloud.net`;
         updateEmailStats();
         renderTextResult([]);
         lastSortedEmails = [];
-        showToast('🧹 Đã xóa danh sách email');
+        showToast('🧹 Đã xóa');
     }
     
     function initEmailSorterEvents() {
