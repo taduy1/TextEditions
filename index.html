@@ -1,27 +1,89 @@
-<html lang="vi"><head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparing 2 lists - 3 results with Copy</title>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ToolBox - Compare Lists & Email Domain Sorter</title>
     <style>
         * {
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
             margin: 0;
             padding: 20px;
         }
-        .container {
+
+        /* Tab styling */
+        .tabs-container {
             max-width: 1400px;
             margin: 0 auto;
         }
+
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px 30px 0 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #2c3e50;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: #d4d9e1;
+            color: #1a73e8;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #1a73e8;
+            border-bottom: 3px solid #1a73e8;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .tab-pane.active-pane {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Shared styles cho cả 2 tab (giữ nguyên giao diện) */
+        .container, .sorter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
         h1 {
             text-align: center;
             color: #1a73e8;
             margin-bottom: 30px;
             font-size: 28px;
         }
+
         .input-row {
             display: flex;
             gap: 20px;
@@ -51,7 +113,6 @@
         }
         textarea {
             width: 100%;
-            height: 250px;
             padding: 12px;
             font-family: 'Consolas', monospace;
             font-size: 14px;
@@ -120,12 +181,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        .output-box h3 span {
-            font-size: 14px;
-            font-weight: normal;
-            color: #666;
-            margin-left: 10px;
-        }
         .copy-btn {
             background: #28a745;
             padding: 4px 12px;
@@ -170,14 +225,6 @@
                 flex-direction: column;
             }
         }
-        .highlight-note {
-            background: #e8f0fe;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #1a73e8;
-        }
         .toast-msg {
             position: fixed;
             bottom: 20px;
@@ -193,71 +240,218 @@
             transition: opacity 0.3s;
             pointer-events: none;
         }
+
+        /* Styles riêng cho Email Sorter (tab2) */
+        .sorter-header {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .flex-grid {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .input-panel, .output-panel {
+            flex: 1;
+            min-width: 320px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .panel-header {
+            background: #f8fafc;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .sort-options {
+            display: flex;
+            gap: 12px;
+            margin: 12px 20px;
+            flex-wrap: wrap;
+        }
+        .sort-chip {
+            background: #f1f5f9;
+            border-radius: 32px;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .sort-chip.active {
+            background: #1e3a8a;
+            color: white;
+        }
+        .group-title {
+            background: #eef2ff;
+            margin: 8px 0 4px 0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1e40af;
+            display: inline-block;
+        }
+        .result-item {
+            border-bottom: 1px solid #f0f2f5;
+            padding: 6px 6px;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .domain-badge {
+            background: #e6f0ff;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+        .empty-state {
+            color: #94a3b8;
+            text-align: center;
+            padding: 48px 20px;
+            font-style: italic;
+        }
+        hr {
+            margin: 12px 0;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>📋 Text Anti-Dupicates</h1>
 
-    <div class="input-row">
-        <div class="input-box">
-            <h3>📝 List 1</h3>
-            <label>Enter a value for each line: </label>
-            <textarea id="list1" placeholder="Ví dụ:
+<div class="tabs-container">
+    <div class="tab-bar">
+        <button class="tab-btn active" data-tab="tab1">📊 So sánh danh sách</button>
+        <button class="tab-btn" data-tab="tab2">✉️ Email Domain Sorter</button>
+    </div>
+
+    <!-- TAB 1: COMPARE LISTS (giữ nguyên code cũ) -->
+    <div id="tab1" class="tab-pane active-pane">
+        <div class="container">
+            <h1>📋 Compare two lists (case-insensitive).</h1>
+            <div class="input-row">
+                <div class="input-box">
+                    <h3>📝 List 1</h3>
+                    <label>Enter a value for each line: </label>
+                    <textarea id="list1" placeholder="Ví dụ:
 a
 b
 c"></textarea>
-            <div class="button-group">
-                <button onclick="clearTextarea('list1')">Delete</button>
-                <button class="secondary" onclick="loadExample()">Exp</button>
-            </div>
-        </div>
-        <div class="input-box">
-            <h3>📝 List 2</h3>
-            <label>Enter a value for each line:</label>
-            <textarea id="list2" placeholder="Ví dụ:
+                    <div class="button-group">
+                        <button onclick="clearTextarea('list1')">Delete</button>
+                        <button class="secondary" onclick="loadExample()">Exp</button>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <h3>📝 List 2</h3>
+                    <label>Enter a value for each line:</label>
+                    <textarea id="list2" placeholder="Ví dụ:
 A
 b
 c
 d"></textarea>
-            <div class="button-group">
-                <button onclick="clearTextarea('list2')">Delete</button>
+                    <div class="button-group">
+                        <button onclick="clearTextarea('list2')">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button onclick="compareLists()" style="padding: 12px 32px; font-size: 16px;">🔍 Start</button>
+            </div>
+            <div class="output-row">
+                <div class="output-box">
+                    <h3>🔄 Duplicate <button class="copy-btn" onclick="copyResult('duplicateResult')">📋 Copy</button></h3>
+                    <div id="duplicateResult" class="result-area"></div>
+                    <div class="stats" id="duplicateStats">All: 0</div>
+                </div>
+                <div class="output-box">
+                    <h3>✨ List 2 - No duplicate (so với List 1) <button class="copy-btn" onclick="copyResult('nonDuplicateAllResult')">📋 Copy</button></h3>
+                    <div id="nonDuplicateAllResult" class="result-area"></div>
+                    <div class="stats" id="nonDuplicateAllStats">All: 0</div>
+                </div>
+                <div class="output-box">
+                    <h3>🔹 AntiDuplicates <button class="copy-btn" onclick="copyResult('mergedUniqueResult')">📋 Copy</button></h3>
+                    <div id="mergedUniqueResult" class="result-area"></div>
+                    <div class="stats" id="mergedUniqueStats">All: 0</div>
+                </div>
+            </div>
+            <div class="footer">
+                💡 Comparison is not case-sensitive.<br>
+                📌 Result: Duplicate (các dòng xuất hiện trong cả 2 list).<br>
+                📌 Result 1: Chỉ các dòng trong List 2 KHÔNG có trong List 1.<br>
+                📌 Result 2: Hợp nhất 2 list, bỏ trùng, giữ thứ tự xuất hiện.
             </div>
         </div>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px;">
-        <button onclick="compareLists()" style="padding: 12px 32px; font-size: 16px;">🔍 Start</button>
-    </div>
-
-    <div class="output-row">
-        <div class="output-box">
-            <h3>🔄 Duplicate </h3>
-            <div id="duplicateResult" class="result-area"></div>
-            <div class="stats" id="duplicateStats">All: 0</div>
-        <button class="copy-btn" onclick="copyResult('duplicateResult')">📋 Copy</button></div>
-        <div class="output-box">
-            <h3>✨ No duplicate. </h3>
-            <div id="nonDuplicateAllResult" class="result-area"></div>
-            <div class="stats" id="nonDuplicateAllStats">All: 0</div>
-        <button class="copy-btn" onclick="copyResult('nonDuplicateAllResult')">📋 Copy</button></div>
-        <div class="output-box">
-            <h3>🔹 AntiDuplicates </h3>
-            <div id="mergedUniqueResult" class="result-area"></div>
-            <div class="stats" id="mergedUniqueStats">All: 0</div>
-        <button class="copy-btn" onclick="copyResult('mergedUniqueResult')">📋 Copy</button></div>
-    </div>
-    <div class="footer">
-        💡 Comparison is not case-sensitive.<br>
-        📌 Result: Duplicate.<br>
-        📌 Result 1: No duplicate.<br>
-        📌 Result 2: AntiDuplicates
+    <!-- TAB 2: EMAIL DOMAIN SORTER (Module riêng) -->
+    <div id="tab2" class="tab-pane">
+        <div class="sorter-container">
+            <div class="sorter-header">
+                <h1>📬 Email Domain Sorter</h1>
+                <p>Phân loại & sắp xếp danh sách email theo tên miền (TLD: .com, .vn, .org, .net, .edu.vn...)</p>
+            </div>
+            <div class="flex-grid">
+                <div class="input-panel">
+                    <div class="panel-header">
+                        <h3>📧 Danh sách email</h3>
+                        <div class="button-group">
+                            <button id="exampleEmailBtn" type="button">📋 Ví dụ</button>
+                            <button id="clearEmailBtn" type="button" class="clear">🗑 Xóa</button>
+                        </div>
+                    </div>
+                    <textarea id="emailInput" rows="12" placeholder="Nhập mỗi email một dòng ...&#10;thomas@example.com&#10;nguyen.van@company.vn&#10;admin@domain.org&#10;support@tech.net&#10;info@startup.io"></textarea>
+                    <div class="stats" style="padding: 8px 20px; text-align:left; background:#f9f9fb;">
+                        <span>📊 Số email: <strong id="inputCount">0</strong></span>
+                    </div>
+                </div>
+                <div class="output-panel">
+                    <div class="panel-header">
+                        <h3>🏷️ Email phân nhóm theo TLD</h3>
+                        <div class="button-group">
+                            <button id="sortEmailBtn" class="secondary" style="background:#1e3a8a;">🔄 Sắp xếp & nhóm</button>
+                            <button id="copyOutputEmailBtn">📋 Copy</button>
+                        </div>
+                    </div>
+                    <div class="sort-options">
+                        <span style="font-size:0.75rem;">🔽 Thứ tự TLD:</span>
+                        <div class="sort-chip active" data-order="alpha">A → Z (theo tên miền)</div>
+                        <div class="sort-chip" data-order="popular">Phổ biến nhất (số lượng)</div>
+                        <div class="sort-chip" data-order="length">Độ dài TLD (ngắn đến dài)</div>
+                    </div>
+                    <div id="emailResultArea" class="result-area" style="min-height: 320px;">
+                        <div class="empty-state">✨ Nhập danh sách email và nhấn "Sắp xếp & nhóm"</div>
+                    </div>
+                    <div class="stats" style="padding: 10px 20px; display: flex; justify-content: space-between;">
+                        <span>📬 Email hợp lệ: <strong id="validCount">0</strong></span>
+                        <span>🏷️ Số nhóm TLD: <strong id="groupCount">0</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                💡 Trích xuất domain → lấy Top-Level-Domain (TLD) như .com, .vn, .co.uk, .edu.vn<br>
+                🔍 Nhóm email theo TLD và sắp xếp linh hoạt.
+            </div>
+        </div>
     </div>
 </div>
+
 <div id="toast" class="toast-msg">✓ Copied to clipboard!</div>
 
 <script>
-    // Hiển thị toast thông báo nhỏ
+    // ---------- TOAST chung ----------
     function showToast(message) {
         const toast = document.getElementById('toast');
         toast.textContent = message || '✓ Copied to clipboard!';
@@ -267,189 +461,286 @@ d"></textarea>
         }, 2000);
     }
 
-    // Hàm copy nội dung từ một result area (lấy text thuần)
+    // ========== 1. CODE CHO TAB COMPARE LISTS (giữ nguyên) ==========
     function copyResult(elementId) {
         const container = document.getElementById(elementId);
         if (!container) return;
-        
-        // Lấy text thuần từ bên trong (thay vì HTML có <br>)
-        let textToCopy = '';
-        if (container.innerText) {
-            textToCopy = container.innerText;
-        } else {
-            // Fallback: dùng textContent
-            textToCopy = container.textContent || '';
-        }
-        
-        // Xử lý trường hợp empty class
-        if (container.classList.contains('empty') || textToCopy === '✨ No data or no results found.') {
-            textToCopy = '';
-        }
-        
-        // Nếu không có dữ liệu thì thông báo
+        let textToCopy = container.innerText || container.textContent || '';
+        if (container.classList.contains('empty') || textToCopy === '✨ No data or no results found.') textToCopy = '';
         if (!textToCopy.trim()) {
             showToast('⚠️ Nothing to copy!');
             return;
         }
-        
-        // Sử dụng Clipboard API
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(textToCopy.trim())
-                .then(() => showToast('✓ Copied to clipboard!'))
-                .catch(err => {
-                    console.error('Clipboard failed:', err);
-                    fallbackCopy(textToCopy);
-                });
-        } else {
-            fallbackCopy(textToCopy);
-        }
+            navigator.clipboard.writeText(textToCopy.trim()).then(() => showToast('✓ Copied!')).catch(() => fallbackCopy(textToCopy));
+        } else { fallbackCopy(textToCopy); }
     }
-    
-    // Fallback copy cho trình duyệt cũ
     function fallbackCopy(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
         document.body.appendChild(textarea);
         textarea.select();
-        try {
-            document.execCommand('copy');
-            showToast('✓ Copied to clipboard!');
-        } catch (err) {
-            showToast('❌ Copy failed');
-        }
+        try { document.execCommand('copy'); showToast('✓ Copied!'); } catch(e) { showToast('❌ Copy failed'); }
         document.body.removeChild(textarea);
     }
-
     function getLines(textareaId) {
         const text = document.getElementById(textareaId).value;
-        const lines = text.split(/\r?\n/);
-        return lines.filter(line => line.trim() !== '');
+        return text.split(/\r?\n/).filter(line => line.trim() !== '');
     }
-
     function compareLists() {
         const list1 = getLines('list1');
         const list2 = getLines('list2');
-        
-        // Map lower -> danh sách các giá trị gốc
-        const map1Lower = new Map();
-        const map2Lower = new Map();
-        
-        for (const item of list1) {
-            const lower = item.toLowerCase();
-            if (!map1Lower.has(lower)) map1Lower.set(lower, []);
-            map1Lower.get(lower).push(item);
-        }
-        
-        for (const item of list2) {
-            const lower = item.toLowerCase();
-            if (!map2Lower.has(lower)) map2Lower.set(lower, []);
-            map2Lower.get(lower).push(item);
-        }
-        
-        // 1. Dòng trùng (tất cả lần xuất hiện)
+        const map1Lower = new Map(), map2Lower = new Map();
+        for (const item of list1) { const low = item.toLowerCase(); if (!map1Lower.has(low)) map1Lower.set(low, []); map1Lower.get(low).push(item); }
+        for (const item of list2) { const low = item.toLowerCase(); if (!map2Lower.has(low)) map2Lower.set(low, []); map2Lower.get(low).push(item); }
         const duplicates = [];
-        for (const item of list1) {
-            const lower = item.toLowerCase();
-            if (map2Lower.has(lower)) duplicates.push(item);
-        }
-        for (const item of list2) {
-            const lower = item.toLowerCase();
-            if (map1Lower.has(lower)) duplicates.push(item);
-        }
-        
-        // 2. Dòng không trùng (tất cả lần xuất hiện)
-        const nonDuplicatesAll = [];
-        for (const item of list1) {
-            const lower = item.toLowerCase();
-            if (!map2Lower.has(lower)) nonDuplicatesAll.push(item);
-        }
-        for (const item of list2) {
-            const lower = item.toLowerCase();
-            if (!map1Lower.has(lower)) nonDuplicatesAll.push(item);
-        }
-        
-        // 3. Hợp nhất 2 list, bỏ trùng (theo lower), ưu tiên chữ hoa
-        const mergedMap = new Map(); // key: lower, value: ưu tiên chữ hoa nhất
-        
+        for (const item of list1) if (map2Lower.has(item.toLowerCase())) duplicates.push(item);
+        for (const item of list2) if (map1Lower.has(item.toLowerCase())) duplicates.push(item);
+        const nonDuplicatesFromList2 = [];
+        for (const item of list2) if (!map1Lower.has(item.toLowerCase())) nonDuplicatesFromList2.push(item);
+        const mergedMap = new Map();
         const allItems = [...list1, ...list2];
         for (const item of allItems) {
-            const lower = item.toLowerCase();
-            if (!mergedMap.has(lower)) {
-                mergedMap.set(lower, item);
-            } else {
-                // Nếu đã tồn tại, ưu tiên giữ cái có chứa chữ hoa (ưu tiên chữ hoa đầu tiên)
-                const existing = mergedMap.get(lower);
-                if (existing !== item && /[A-Z]/.test(item) && !/[A-Z]/.test(existing)) {
-                    mergedMap.set(lower, item);
-                }
+            const low = item.toLowerCase();
+            if (!mergedMap.has(low)) mergedMap.set(low, item);
+            else {
+                const existing = mergedMap.get(low);
+                if (existing !== item && /[A-Z]/.test(item) && !/[A-Z]/.test(existing)) mergedMap.set(low, item);
             }
         }
-        
-        // Giữ đúng thứ tự xuất hiện lần đầu trong allItems nhưng đã lọc trùng
-        const mergedUnique = [];
-        const seen = new Set();
+        const mergedUnique = [], seen = new Set();
         for (const item of allItems) {
-            const lower = item.toLowerCase();
-            if (!seen.has(lower)) {
-                seen.add(lower);
-                mergedUnique.push(mergedMap.get(lower));
-            }
+            const low = item.toLowerCase();
+            if (!seen.has(low)) { seen.add(low); mergedUnique.push(mergedMap.get(low)); }
         }
-        
         displayResult('duplicateResult', duplicates, 'duplicateStats');
-        displayResult('nonDuplicateAllResult', nonDuplicatesAll, 'nonDuplicateAllStats');
+        displayResult('nonDuplicateAllResult', nonDuplicatesFromList2, 'nonDuplicateAllStats');
         displayResult('mergedUniqueResult', mergedUnique, 'mergedUniqueStats');
     }
-
     function displayResult(elementId, dataArray, statsId) {
         const container = document.getElementById(elementId);
         const statsSpan = document.getElementById(statsId);
-
         if (!dataArray || dataArray.length === 0) {
             container.innerHTML = '✨ No data or no results found.';
             container.classList.add('empty');
             statsSpan.innerHTML = `All: 0`;
             return;
         }
-
         let html = '';
-        for (let i = 0; i < dataArray.length; i++) {
-            const safeText = escapeHtml(dataArray[i]);
-            html += `${safeText}\n`;
-        }
+        for (let i = 0; i < dataArray.length; i++) html += `${escapeHtml(dataArray[i])}\n`;
         container.innerHTML = html.replace(/\n/g, '<br>');
         container.classList.remove('empty');
         statsSpan.innerHTML = `All: ${dataArray.length}`;
     }
-
     function escapeHtml(str) {
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
-
-    function clearTextarea(id) {
-        document.getElementById(id).value = '';
-        // Xóa kết quả sau khi xóa textarea? Giữ nguyên hoặc có thể gọi compareLists() tùy ý
-        // Theo yêu cầu "giữ nguyên tất cả", ta chỉ xóa textarea, không tự động clear kết quả.
-    }
-
+    function clearTextarea(id) { document.getElementById(id).value = ''; }
     function loadExample() {
         document.getElementById('list1').value = 'a\nb\nc';
         document.getElementById('list2').value = 'A\nb\nc\nd';
         compareLists();
     }
 
+    // ========== 2. CODE CHO EMAIL DOMAIN SORTER ==========
+    // helper TLD thông minh
+    function getTLDFromDomain(domain) {
+        if (!domain) return null;
+        const parts = domain.split('.');
+        if (parts.length < 2) return '.' + domain;
+        const compositeTLDs = ['com.vn', 'co.uk', 'org.uk', 'ac.uk', 'gov.uk', 'net.uk', 'edu.vn', 'gov.vn', 'org.vn', 'ac.vn', 'int.vn', 'pro.vn', 'info.vn', 'name.vn', 'co.nz', 'com.au', 'net.au', 'org.au', 'com.br', 'net.br', 'co.jp', 'or.jp', 'ac.jp'];
+        const lastTwo = parts.slice(-2).join('.');
+        const lastThree = parts.slice(-3).join('.');
+        if (compositeTLDs.includes(lastThree)) return '.' + lastThree;
+        if (compositeTLDs.includes(lastTwo)) return '.' + lastTwo;
+        return '.' + parts[parts.length-1];
+    }
+    function extractDomainFromEmail(email) {
+        if (!email || typeof email !== 'string') return null;
+        email = email.trim();
+        const atIndex = email.lastIndexOf('@');
+        if (atIndex === -1) return null;
+        let domain = email.substring(atIndex+1).trim().toLowerCase();
+        return domain || null;
+    }
+    function parseEmails(emailLines) {
+        const result = [];
+        for (let line of emailLines) {
+            line = line.trim();
+            if (line === '') continue;
+            const domain = extractDomainFromEmail(line);
+            if (!domain) continue;
+            const tld = getTLDFromDomain(domain);
+            result.push({ raw: line, domain: domain, tld: tld });
+        }
+        return result;
+    }
+    function groupByTLD(emailsArray) {
+        const groups = new Map();
+        for (const item of emailsArray) {
+            const tld = item.tld;
+            if (!groups.has(tld)) groups.set(tld, []);
+            groups.get(tld).push(item.raw);
+        }
+        return groups;
+    }
+    function sortTldGroups(groupsMap, orderType) {
+        const entries = Array.from(groupsMap.entries());
+        if (orderType === 'alpha') entries.sort((a,b) => a[0].localeCompare(b[0]));
+        else if (orderType === 'popular') entries.sort((a,b) => b[1].length - a[1].length);
+        else if (orderType === 'length') entries.sort((a,b) => a[0].length - b[0].length);
+        return new Map(entries);
+    }
+    function renderEmailGroups(groupsMap, totalValid) {
+        const container = document.getElementById('emailResultArea');
+        if (!groupsMap || groupsMap.size === 0) {
+            container.innerHTML = '<div class="empty-state">📭 Không có email hợp lệ nào. Hãy nhập danh sách email.</div>';
+            document.getElementById('validCount').innerText = '0';
+            document.getElementById('groupCount').innerText = '0';
+            return;
+        }
+        let html = '';
+        let totalMails = 0;
+        for (const [tld, emails] of groupsMap.entries()) {
+            totalMails += emails.length;
+            const tldDisplay = tld.startsWith('.') ? tld : '.' + tld;
+            html += `<div style="margin-bottom: 18px;"><div class="group-title">📁 ${tldDisplay}  <span style="font-weight:normal;">(${emails.length} email)</span></div><div style="margin-left: 6px;">`;
+            for (let email of emails) {
+                html += `<div class="result-item"><span class="domain-badge">${tldDisplay}</span> <span class="email-text">${escapeHtml(email)}</span></div>`;
+            }
+            html += `</div></div><hr style="margin: 6px 0 14px;">`;
+        }
+        container.innerHTML = html;
+        document.getElementById('validCount').innerText = totalValid;
+        document.getElementById('groupCount').innerText = groupsMap.size;
+    }
+    let lastGroupsMap = new Map();
+    function processEmailSort() {
+        const rawText = document.getElementById('emailInput').value;
+        const lines = rawText.split(/\r?\n/);
+        const emailsData = parseEmails(lines);
+        if (emailsData.length === 0) {
+            renderEmailGroups(new Map(), 0);
+            lastGroupsMap = new Map();
+            return;
+        }
+        const groups = groupByTLD(emailsData);
+        const activeChip = document.querySelector('#tab2 .sort-chip.active');
+        let orderType = 'alpha';
+        if (activeChip) orderType = activeChip.getAttribute('data-order') || 'alpha';
+        const sorted = sortTldGroups(groups, orderType);
+        lastGroupsMap = sorted;
+        renderEmailGroups(sorted, emailsData.length);
+    }
+    function copyEmailOutput() {
+        if (!lastGroupsMap || lastGroupsMap.size === 0) {
+            showToast('📭 Không có dữ liệu để copy!');
+            return;
+        }
+        let plainText = '';
+        for (const [tld, emails] of lastGroupsMap.entries()) {
+            const tldDisplay = tld.startsWith('.') ? tld : '.' + tld;
+            plainText += `📁 ${tldDisplay} (${emails.length} email)\n`;
+            emails.forEach(email => { plainText += `  ${email}\n`; });
+            plainText += `\n`;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(plainText.trim()).then(() => showToast('✅ Đã copy danh sách phân nhóm TLD')).catch(() => fallbackCopyEmail(plainText));
+        } else { fallbackCopyEmail(plainText); }
+    }
+    function fallbackCopyEmail(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try { document.execCommand('copy'); showToast('📋 Đã copy'); } catch(e) { showToast('❌ Lỗi copy'); }
+        document.body.removeChild(textarea);
+    }
+    function updateEmailStats() {
+        const raw = document.getElementById('emailInput').value;
+        const lines = raw.split(/\r?\n/);
+        let emailCount = 0;
+        for (let line of lines) {
+            if (extractDomainFromEmail(line) !== null) emailCount++;
+        }
+        document.getElementById('inputCount').innerText = emailCount;
+    }
+    function loadEmailExample() {
+        document.getElementById('emailInput').value = `alice@work.com
+bob@startup.vn
+carol@university.edu.vn
+david@company.org
+emily@tech.co.uk
+frank@global.net
+grace@shop.vn
+henry@agency.com.vn
+iris@dev.io
+jack@example.org
+kate@hospitality.vn
+leo@edu.vn
+maria@company.com
+nina@store.com.vn`;
+        updateEmailStats();
+        processEmailSort();
+    }
+    function clearEmailInput() {
+        document.getElementById('emailInput').value = '';
+        updateEmailStats();
+        renderEmailGroups(new Map(), 0);
+        lastGroupsMap = new Map();
+        showToast('🧹 Đã xóa danh sách email');
+    }
+    function initEmailSorterEvents() {
+        document.getElementById('emailInput').addEventListener('input', updateEmailStats);
+        document.getElementById('sortEmailBtn').addEventListener('click', processEmailSort);
+        document.getElementById('copyOutputEmailBtn').addEventListener('click', copyEmailOutput);
+        document.getElementById('exampleEmailBtn').addEventListener('click', loadEmailExample);
+        document.getElementById('clearEmailBtn').addEventListener('click', clearEmailInput);
+        const chips = document.querySelectorAll('#tab2 .sort-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                if (this.classList.contains('active')) return;
+                chips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                processEmailSort();
+            });
+        });
+    }
+
+    // ========== 3. XỬ LÝ CHUYỂN TAB ==========
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active-pane'));
+        document.getElementById(tabId).classList.add('active-pane');
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        if (tabId === 'tab2') {
+            setTimeout(() => { updateEmailStats(); if(document.getElementById('emailInput').value.trim() !== "") processEmailSort(); }, 30);
+        }
+    }
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const tab = btn.getAttribute('data-tab');
+            if (tab) switchTab(tab);
+        });
+    });
+
+    // Khởi tạo các sự kiện
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            compareLists();
+            const activeTab = document.querySelector('.tab-pane.active-pane').id;
+            if (activeTab === 'tab1') { e.preventDefault(); compareLists(); }
+            else if (activeTab === 'tab2') { e.preventDefault(); processEmailSort(); }
         }
     });
+    // Khởi tạo compare lists cũ
+    window.clearTextarea = clearTextarea;
+    window.loadExample = loadExample;
+    window.compareLists = compareLists;
+    window.copyResult = copyResult;
+    // Khởi chạy email sorter
+    initEmailSorterEvents();
+    // mặc định update stats
+    updateEmailStats();
 </script>
-
-
-</body></html>
+</body>
+</html>
