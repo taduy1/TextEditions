@@ -368,7 +368,7 @@ textarea { resize: vertical; min-height: 140px; }
   <div class="sidebar-logo">🔐TextEditor<span>Bộ xử lý văn bản</span></div>
 
   <div class="sidebar-group">Tiện ích</div>
-  <div class="nav-item active" onclick="go('cookie')"><span class="icon">🍪</span>Cookie</div>
+  <div class="nav-item" onclick="go('cookie')"><span class="icon">🍪</span>Cookie</div>
   <div class="nav-item" onclick="go('pomodoro')"><span class="icon">🍅</span>Pomodoro</div>
   <div class="nav-item" onclick="go('edit-text')"><span class="icon">✏️</span>Edit Text</div>
   <div class="nav-item" onclick="go('uid-year')"><span class="icon">🆔</span>UID → Year</div>
@@ -377,7 +377,7 @@ textarea { resize: vertical; min-height: 140px; }
   <div class="nav-item" onclick="go('cat-chuoi')"><span class="icon">✂️</span>Cắt Chuỗi</div>
   <div class="nav-item" onclick="go('cat-line')"><span class="icon">📄</span>Cắt Line</div>
   <div class="nav-item" onclick="go('ghep-dong')"><span class="icon">🔗</span>Ghép dòng</div>
-  <div class="nav-item" onclick="go('trung-lap')"><span class="icon">🔁</span>Trùng lặp</div>
+  <div class="nav-item active" onclick="go('trung-lap')"><span class="icon">🔁</span>Trùng lặp</div>
   <div class="nav-item" onclick="go('dao-tu')"><span class="icon">↩️</span>Đảo từ</div>
   <div class="nav-item" onclick="go('ghep-chuoi')"><span class="icon">➕</span>Ghép Chuỗi</div>
   <div class="nav-item" onclick="go('chia-cat-dong')"><span class="icon">⚡</span>Chia cắt dòng</div>
@@ -404,13 +404,13 @@ textarea { resize: vertical; min-height: 140px; }
 <!-- ═══ MAIN ═══ -->
 <div class="main-area">
   <div class="topbar">
-    <div class="topbar-title" id="topbar-title">🍪 Cookie</div>
-    <div class="topbar-sub" id="topbar-sub">Xử lý cookie</div>
+    <div class="topbar-title" id="topbar-title">🔁 Trùng lặp</div>
+    <div class="topbar-sub" id="topbar-sub">Xử lý dòng trùng giữa hai danh sách</div>
   </div>
   <div class="panel-wrap">
 
     <!-- ══ COOKIE ══ -->
-    <div class="panel active" id="p-cookie">
+    <div class="panel" id="p-cookie">
       <div class="two-col">
         <div class="card col-full">
           <div class="card-title">🍪 Xử lý Cookie</div>
@@ -641,29 +641,63 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ TRÙNG LẶP ══ -->
-    <div class="panel" id="p-trung-lap">
+    <!-- ══ TRÙNG LẶP (MỚI - GIỐNG ẢNH) ══ -->
+    <div class="panel active" id="p-trung-lap">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🔁 Xóa / Tìm dòng trùng lặp</div>
-          <textarea id="tl-input" placeholder="line1&#10;line2&#10;line1&#10;line3..."></textarea>
-          <div class="btn-bar" style="margin-top:10px;align-items:center">
-            <button class="btn btn-blue" onclick="trungLap('remove')">🔁 Xóa trùng</button>
-            <button class="btn btn-yellow" onclick="trungLap('find')">🔍 Chỉ giữ bản trùng</button>
-            <button class="btn btn-sky" onclick="trungLap('count')">📊 Đếm số lần trùng</button>
-            <label class="chk"><input type="checkbox" id="tl-case"> Phân biệt hoa/thường</label>
-            <label class="chk"><input type="checkbox" id="tl-trim" checked> Trim</label>
-            <label class="chk"><input type="checkbox" id="tl-sort"> Sắp xếp</label>
+          <div class="card-title">🔁 Xử lý trùng lặp giữa hai danh sách</div>
+          
+          <!-- Loại bỏ trùng lặp? toggle -->
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="tl-dedup" checked><span class="toggle-slider"></span></label>
+            <span class="toggle-label">Loại bỏ trùng lặp?</span>
+          </div>
+          
+          <!-- Nội dung A -->
+          <div class="field-row">
+            <span class="field-label">Nội dung A</span>
+            <textarea id="tl-input-a" rows="5" placeholder="Nhập danh sách A, mỗi dòng một giá trị...&#10;user1@example.com&#10;user2@example.com&#10;user3@example.com"></textarea>
+          </div>
+          
+          <!-- Nội dung B -->
+          <div class="field-row">
+            <span class="field-label">Nội dung B</span>
+            <textarea id="tl-input-b" rows="5" placeholder="Nhập danh sách B, mỗi dòng một giá trị...&#10;user2@example.com&#10;user3@example.com&#10;user4@example.com"></textarea>
+          </div>
+          
+          <!-- Radio group: Bỏ dòng trùng / Giữ dòng trùng -->
+          <div class="field-row">
+            <span class="field-label">Thực thi</span>
+            <div class="radio-group" id="tl-action-group">
+              <div class="radio-btn" data-action="remove" onclick="setTlAction('remove', this)">Bỏ dòng trùng</div>
+              <div class="radio-btn active" data-action="keep" onclick="setTlAction('keep', this)">Giữ dòng trùng</div>
+            </div>
+          </div>
+          
+          <!-- Button Trigger và Xóa -->
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="processTlDuplicate()">▶ Trigger</button>
+            <button class="btn btn-red" onclick="clearTlAll()">🗑 Xóa</button>
           </div>
         </div>
+        
+        <!-- Kết quả -->
         <div class="card" style="position:relative">
           <div class="card-title">Kết quả <span class="badge" id="tl-cnt">0</span></div>
           <div class="result-box" id="tl-result">—</div>
           <button class="copy-btn" id="tl-cb" onclick="cp('tl-result','tl-cb')">Copy</button>
         </div>
+        
+        <!-- Thống kê -->
         <div class="card">
-          <div class="card-title">Thống kê</div>
-          <div id="tl-stats" style="font-size:13px;line-height:2;color:var(--muted)">—</div>
+          <div class="card-title">📊 Thống kê</div>
+          <div class="stats-row">
+            <div class="stat-pill">Dòng A: <b id="tl-stat-a">0</b></div>
+            <div class="stat-pill">Dòng B: <b id="tl-stat-b">0</b></div>
+            <div class="stat-pill">Dòng trùng: <b id="tl-stat-dup">0</b></div>
+            <div class="stat-pill">Kết quả: <b id="tl-stat-result">0</b></div>
+          </div>
+          <div id="tl-extra-stats" style="margin-top:8px; font-size:12px; color:var(--muted)"></div>
         </div>
       </div>
     </div>
@@ -1141,6 +1175,9 @@ textarea { resize: vertical; min-height: 140px; }
 <div class="toast" id="toast">✅ Đã copy!</div>
 
 <script>
+// ─── BIẾN TOÀN CỤC CHO TRÙNG LẶP ───
+let currentTlAction = 'keep'; // 'keep' hoặc 'remove'
+
 // ─── NAVIGATION ───────────────────────────────────────────────────────────
 const TITLES = {
   'cookie':['🍪 Cookie','Xử lý và lọc cookie'],
@@ -1150,7 +1187,7 @@ const TITLES = {
   'cat-chuoi':['✂️ Cắt Chuỗi','Cắt cột từ chuỗi có dấu phân cách'],
   'cat-line':['📄 Cắt Line','Lấy một phần dòng'],
   'ghep-dong':['🔗 Ghép dòng','Nối nhiều dòng thành một'],
-  'trung-lap':['🔁 Trùng lặp','Xóa hoặc tìm dòng trùng lặp'],
+  'trung-lap':['🔁 Trùng lặp','Xử lý dòng trùng giữa hai danh sách'],
   'dao-tu':['↩️ Đảo từ','Đảo ký tự, từ, thứ tự dòng'],
   'ghep-chuoi':['➕ Ghép Chuỗi','Ghép hai danh sách với nhau'],
   'chia-cat-dong':['⚡ Chia cắt dòng','Tách chuỗi thành nhiều dòng'],
@@ -1403,30 +1440,112 @@ function ghepDong(){
 }
 function ghepDongBy(s){document.getElementById('gd-sep').value=s;ghepDong();}
 
-// ─── TRÙNG LẶP ────────────────────────────────────────────────────────────
-function trungLap(action){
-  const lines=document.getElementById('tl-input').value.split('\n');
-  const cs=document.getElementById('tl-case').checked;
-  const trim=document.getElementById('tl-trim').checked;
-  const sort=document.getElementById('tl-sort').checked;
-  const key=l=>trim?(cs?l.trim():l.trim().toLowerCase()):(cs?l:l.toLowerCase());
-  const freq={};
-  lines.forEach(l=>{const k=key(l);freq[k]=(freq[k]||0)+1;});
-  let r;
-  if(action==='remove'){
-    const seen=new Set();
-    r=lines.filter(l=>{const k=key(l);if(seen.has(k))return false;seen.add(k);return true;});
-  } else if(action==='find'){
-    const seen=new Set();const dup=new Set();
-    lines.forEach(l=>{const k=key(l);if(seen.has(k))dup.add(k);else seen.add(k);});
-    r=lines.filter(l=>dup.has(key(l)));
-  } else {
-    r=Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([k,c])=>`${c}x → ${k}`);
+// ─── TRÙNG LẶP (MỚI - GIỐNG ẢNH) ─────────────────────────────────────────
+function setTlAction(action, btnElement) {
+  currentTlAction = action;
+  document.querySelectorAll('#tl-action-group .radio-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  btnElement.classList.add('active');
+}
+
+function processTlDuplicate() {
+  // Lấy nội dung từ hai textarea
+  const linesA = getLines('tl-input-a');
+  const linesB = getLines('tl-input-b');
+  
+  // Kiểm tra có dữ liệu không
+  if (linesA.length === 0 && linesB.length === 0) {
+    setResult('tl-result', '—', 'tl-cnt');
+    document.getElementById('tl-stat-a').textContent = '0';
+    document.getElementById('tl-stat-b').textContent = '0';
+    document.getElementById('tl-stat-dup').textContent = '0';
+    document.getElementById('tl-stat-result').textContent = '0';
+    document.getElementById('tl-extra-stats').innerHTML = '';
+    showToast('⚠️ Vui lòng nhập dữ liệu vào ít nhất một ô!');
+    return;
   }
-  if(sort&&action!=='count') r.sort((a,b)=>a.localeCompare(b));
-  const total=lines.filter(l=>l.trim()).length;
-  setResult('tl-result',r.join('\n'),'tl-cnt');
-  document.getElementById('tl-stats').innerHTML=`Ban đầu: <b>${total}</b><br>Kết quả: <b>${r.length}</b><br>Bỏ đi: <b>${total-r.length}</b>`;
+  
+  // Kiểm tra tùy chọn "Loại bỏ trùng lặp?" - xóa trùng trong nội bộ từng danh sách
+  const dedupEnabled = document.getElementById('tl-dedup').checked;
+  
+  let finalLinesA = linesA;
+  let finalLinesB = linesB;
+  
+  if (dedupEnabled) {
+    // Loại bỏ trùng lặp trong nội bộ từng danh sách (giữ thứ tự xuất hiện)
+    const seenA = new Set();
+    finalLinesA = linesA.filter(line => {
+      if (seenA.has(line)) return false;
+      seenA.add(line);
+      return true;
+    });
+    
+    const seenB = new Set();
+    finalLinesB = linesB.filter(line => {
+      if (seenB.has(line)) return false;
+      seenB.add(line);
+      return true;
+    });
+  }
+  
+  // Tìm các dòng trùng nhau (giao nhau)
+  const setA = new Set(finalLinesA);
+  const setB = new Set(finalLinesB);
+  const duplicates = new Set();
+  
+  for (const line of setA) {
+    if (setB.has(line)) {
+      duplicates.add(line);
+    }
+  }
+  
+  let resultLines = [];
+  
+  if (currentTlAction === 'remove') {
+    // Bỏ dòng trùng: lấy A ∪ B, sau đó loại bỏ các dòng trùng
+    const union = new Set([...setA, ...setB]);
+    for (const line of union) {
+      if (!duplicates.has(line)) {
+        resultLines.push(line);
+      }
+    }
+  } else {
+    // Giữ dòng trùng: chỉ lấy các dòng xuất hiện trong cả A và B
+    resultLines = Array.from(duplicates);
+  }
+  
+  // Hiển thị kết quả
+  if (resultLines.length === 0) {
+    setResult('tl-result', '—', 'tl-cnt');
+  } else {
+    setResult('tl-result', resultLines.join('\n'), 'tl-cnt');
+  }
+  
+  // Cập nhật thống kê
+  document.getElementById('tl-stat-a').textContent = finalLinesA.length;
+  document.getElementById('tl-stat-b').textContent = finalLinesB.length;
+  document.getElementById('tl-stat-dup').textContent = duplicates.size;
+  document.getElementById('tl-stat-result').textContent = resultLines.length;
+  
+  // Thông báo thêm
+  if (currentTlAction === 'remove') {
+    document.getElementById('tl-extra-stats').innerHTML = `✨ Đã loại bỏ <b>${duplicates.size}</b> dòng trùng khỏi kết quả`;
+  } else {
+    document.getElementById('tl-extra-stats').innerHTML = `🔍 Chỉ giữ lại <b>${duplicates.size}</b> dòng xuất hiện trong cả hai danh sách`;
+  }
+}
+
+function clearTlAll() {
+  document.getElementById('tl-input-a').value = '';
+  document.getElementById('tl-input-b').value = '';
+  setResult('tl-result', '—', 'tl-cnt');
+  document.getElementById('tl-stat-a').textContent = '0';
+  document.getElementById('tl-stat-b').textContent = '0';
+  document.getElementById('tl-stat-dup').textContent = '0';
+  document.getElementById('tl-stat-result').textContent = '0';
+  document.getElementById('tl-extra-stats').innerHTML = '';
+  showToast('🗑 Đã xóa tất cả dữ liệu');
 }
 
 // ─── ĐẢO TỪ ──────────────────────────────────────────────────────────────
