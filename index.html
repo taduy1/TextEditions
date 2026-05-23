@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2FA Text Tools</title>
+<title>2FA Text Tools - Full Features</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');
 
@@ -33,17 +33,16 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--sans); background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
 
-/* ─── SIDEBAR ─── */
+/* SIDEBAR */
 .sidebar {
-  width: 160px;
-  min-width: 160px;
+  width: 200px;
+  min-width: 200px;
   background: var(--sidebar-bg);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   z-index: 10;
   scrollbar-width: thin;
-  scrollbar-color: #333 transparent;
 }
 
 .sidebar-logo {
@@ -85,7 +84,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); disp
 .nav-item.active { background: rgba(59,91,219,0.2); color: var(--sidebar-active-text); border-left-color: var(--sidebar-active); }
 .nav-item .icon { font-size: 14px; width: 16px; text-align: center; flex-shrink: 0; }
 
-/* ─── MAIN ─── */
+/* MAIN */
 .main-area {
   flex: 1;
   display: flex;
@@ -113,15 +112,14 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); disp
   overflow-y: auto;
   padding: 20px;
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
 }
 
-/* ─── PANELS ─── */
+/* PANELS */
 .panel { display: none; animation: fadeSlide 0.2s ease; }
 .panel.active { display: block; }
 @keyframes fadeSlide { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
 
-/* ─── CARDS ─── */
+/* CARDS */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -146,7 +144,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); disp
 @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
 .col-full { grid-column: 1/-1; }
 
-/* ─── FORM ELEMENTS ─── */
 textarea, input[type=text], input[type=number], select {
   width: 100%;
   font-family: var(--mono);
@@ -161,24 +158,23 @@ textarea, input[type=text], input[type=number], select {
   line-height: 1.65;
 }
 textarea:focus, input:focus, select:focus { border-color: var(--accent); }
-textarea { resize: vertical; min-height: 140px; }
+textarea { resize: vertical; min-height: 120px; }
 
 .field-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .field-label {
   font-size: 12px;
   color: var(--muted);
   font-weight: 600;
   white-space: nowrap;
-  min-width: 90px;
+  min-width: 130px;
 }
-.field-row input, .field-row select { flex: 1; min-height: 34px; }
 
-/* ─── TOGGLE ─── */
+/* TOGGLE */
 .toggle-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
 .toggle input { opacity: 0; width: 0; height: 0; }
@@ -197,13 +193,12 @@ textarea { resize: vertical; min-height: 140px; }
   background: white;
   border-radius: 50%;
   transition: 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 .toggle input:checked + .toggle-slider { background: var(--accent); }
 .toggle input:checked + .toggle-slider:before { transform: translateX(18px); }
 .toggle-label { font-size: 12.5px; color: var(--text); font-weight: 500; }
 
-/* ─── BUTTONS ─── */
+/* BUTTONS */
 .btn-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
 .btn {
   font-family: var(--sans);
@@ -217,7 +212,7 @@ textarea { resize: vertical; min-height: 140px; }
   white-space: nowrap;
 }
 .btn-blue { background: var(--accent); color: #fff; }
-.btn-blue:hover { background: #3451c7; box-shadow: 0 2px 8px rgba(59,91,219,0.3); }
+.btn-blue:hover { background: #3451c7; }
 .btn-sky { background: #e0f2fe; color: var(--accent2); border: 1px solid #bae6fd; }
 .btn-sky:hover { background: #bae6fd; }
 .btn-green { background: #d1fae5; color: #059669; border: 1px solid #a7f3d0; }
@@ -231,7 +226,7 @@ textarea { resize: vertical; min-height: 140px; }
 .btn-purple { background: #ede9fe; color: #7c3aed; border: 1px solid #ddd6fe; }
 .btn-purple:hover { background: #ddd6fe; }
 
-/* ─── RESULT ─── */
+/* RESULT */
 .result-box {
   position: relative;
   background: #f8f9ff;
@@ -242,6 +237,8 @@ textarea { resize: vertical; min-height: 140px; }
   font-size: 12.5px;
   line-height: 1.65;
   min-height: 120px;
+  max-height: 400px;
+  overflow-y: auto;
   white-space: pre-wrap;
   word-break: break-all;
   color: var(--text);
@@ -265,7 +262,7 @@ textarea { resize: vertical; min-height: 140px; }
 .copy-btn:hover { background: #3451c7; }
 .copy-btn.ok { background: var(--accent3); }
 
-/* ─── STATS ─── */
+/* STATS */
 .stats-row {
   display: flex;
   gap: 14px;
@@ -284,7 +281,7 @@ textarea { resize: vertical; min-height: 140px; }
 }
 .stat-pill b { color: var(--accent); }
 
-/* ─── RADIO GROUP ─── */
+/* RADIO GROUP */
 .radio-group { display: flex; gap: 6px; flex-wrap: wrap; }
 .radio-btn {
   padding: 6px 13px;
@@ -302,13 +299,16 @@ textarea { resize: vertical; min-height: 140px; }
 .radio-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .radio-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
 
-/* ─── TABLE ─── */
-.info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.info-table td { padding: 7px 4px; border-bottom: 1px solid var(--border); }
-.info-table td:first-child { color: var(--muted); font-weight: 500; }
-.info-table td:last-child { text-align: right; font-family: var(--mono); font-weight: 600; color: var(--accent); }
+/* BADGE */
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 700;
+  border-radius: 4px; padding: 1px 6px;
+  font-family: var(--mono); min-width: 20px;
+}
 
-/* ─── TOAST ─── */
+/* TOAST */
 .toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(60px);
@@ -316,20 +316,26 @@ textarea { resize: vertical; min-height: 140px; }
   padding: 9px 22px; border-radius: 30px;
   font-size: 13px; font-weight: 700;
   z-index: 9999; transition: transform 0.3s cubic-bezier(.175,.885,.32,1.275);
-  pointer-events: none; box-shadow: 0 6px 20px rgba(16,185,129,0.35);
-  font-family: var(--sans);
+  pointer-events: none;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ─── CHECKBOX ─── */
-.chk { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text); cursor:pointer; user-select:none; }
-.chk input { accent-color: var(--accent); width:14px; height:14px; cursor:pointer; }
+/* PROGRESS BAR */
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent3);
+  transition: width 0.3s;
+}
 
-/* ─── SCROLLBAR ─── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-/* ─── POMODORO ─── */
+/* POMODORO */
 .pomo-clock {
   font-family: var(--mono);
   font-size: 64px;
@@ -343,29 +349,16 @@ textarea { resize: vertical; min-height: 140px; }
 .pomo-progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 18px; }
 .pomo-bar { height: 100%; background: var(--accent); border-radius: 3px; transition: width 1s linear; }
 
-/* ─── BADGE ─── */
-.badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--accent); color: #fff;
-  font-size: 10px; font-weight: 700;
-  border-radius: 4px; padding: 1px 6px;
-  font-family: var(--mono); min-width: 20px;
-}
-
-/* ─── FB LINK ─── */
-.fb-result-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid var(--border);
-  font-family: var(--mono); font-size: 12px;
-}
-.fb-result-item:last-child { border: none; }
+/* CHECKBOX */
+.chk { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text); cursor:pointer; user-select:none; }
+.chk input { accent-color: var(--accent); width:14px; height:14px; cursor:pointer; }
 </style>
 </head>
 <body>
 
-<!-- ═══ SIDEBAR ═══ -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sidebar-logo">🔐TextEditor<span>Bộ xử lý văn bản</span></div>
+  <div class="sidebar-logo">🔐 2FA Tools <span>Text Processing Suite</span></div>
 
   <div class="sidebar-group">Tiện ích</div>
   <div class="nav-item" onclick="go('cookie')"><span class="icon">🍪</span>Cookie</div>
@@ -377,7 +370,7 @@ textarea { resize: vertical; min-height: 140px; }
   <div class="nav-item" onclick="go('cat-chuoi')"><span class="icon">✂️</span>Cắt Chuỗi</div>
   <div class="nav-item" onclick="go('cat-line')"><span class="icon">📄</span>Cắt Line</div>
   <div class="nav-item" onclick="go('ghep-dong')"><span class="icon">🔗</span>Ghép dòng</div>
-  <div class="nav-item active" onclick="go('trung-lap')"><span class="icon">🔁</span>Trùng lặp</div>
+  <div class="nav-item" onclick="go('trung-lap')"><span class="icon">🔁</span>Trùng lặp</div>
   <div class="nav-item" onclick="go('dao-tu')"><span class="icon">↩️</span>Đảo từ</div>
   <div class="nav-item" onclick="go('ghep-chuoi')"><span class="icon">➕</span>Ghép Chuỗi</div>
   <div class="nav-item" onclick="go('chia-cat-dong')"><span class="icon">⚡</span>Chia cắt dòng</div>
@@ -393,6 +386,9 @@ textarea { resize: vertical; min-height: 140px; }
   <div class="nav-item" onclick="go('json')"><span class="icon">📦</span>JSON</div>
   <div class="nav-item" onclick="go('loc-tag')"><span class="icon">🏷️</span>Lọc tag</div>
 
+  <div class="sidebar-group">So sánh</div>
+  <div class="nav-item active" onclick="go('so-sanh-list')"><span class="icon">🔍</span>So sánh 2 list</div>
+
   <div class="sidebar-group">Khác</div>
   <div class="nav-item" onclick="go('tinh-sub')"><span class="icon">📐</span>Tính Sub</div>
   <div class="nav-item" onclick="go('join-chu')"><span class="icon">🔡</span>Join chữ</div>
@@ -401,15 +397,90 @@ textarea { resize: vertical; min-height: 140px; }
   <div class="nav-item" onclick="go('fb-link')"><span class="icon">📘</span>Fb link</div>
 </aside>
 
-<!-- ═══ MAIN ═══ -->
+<!-- MAIN -->
 <div class="main-area">
   <div class="topbar">
-    <div class="topbar-title" id="topbar-title">🔁 Trùng lặp</div>
-    <div class="topbar-sub" id="topbar-sub">Xử lý dòng trùng giữa hai danh sách</div>
+    <div class="topbar-title" id="topbar-title">🔍 So sánh 2 list</div>
+    <div class="topbar-sub" id="topbar-sub">So sánh list 2 với list 1, tìm dòng trùng và không trùng</div>
   </div>
   <div class="panel-wrap">
 
-    <!-- ══ COOKIE ══ -->
+    <!-- SO SÁNH 2 LIST -->
+    <div class="panel active" id="p-so-sanh-list">
+      <div class="two-col">
+        <div class="card col-full">
+          <div class="card-title">🔍 So sánh 2 List - Tìm dòng trùng / không trùng</div>
+          
+          <div class="field-row">
+            <span class="field-label">📋 List 1 (Tham chiếu)</span>
+            <textarea id="ssl-list1" rows="5" placeholder="Nhập danh sách tham chiếu, mỗi dòng một giá trị...&#10;user1@example.com&#10;user2@example.com&#10;user3@example.com"></textarea>
+          </div>
+          
+          <div class="field-row">
+            <span class="field-label">📋 List 2 (Cần so sánh)</span>
+            <textarea id="ssl-list2" rows="5" placeholder="Nhập danh sách cần so sánh, mỗi dòng một giá trị...&#10;user2@example.com&#10;user3@example.com&#10;user4@example.com"></textarea>
+          </div>
+          
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="ssl-dedup" checked><span class="toggle-slider"></span></label>
+            <span class="toggle-label">Loại bỏ trùng lặp trong từng list</span>
+          </div>
+          
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="ssl-case-sensitive"><span class="toggle-slider"></span></label>
+            <span class="toggle-label">Phân biệt chữ hoa/thường</span>
+          </div>
+          
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="ssl-trim" checked><span class="toggle-slider"></span></label>
+            <span class="toggle-label">Trim khoảng trắng đầu/cuối</span>
+          </div>
+          
+          <div class="field-row">
+            <span class="field-label">Hiển thị</span>
+            <div class="radio-group" id="ssl-display-group">
+              <div class="radio-btn active" data-display="both" onclick="setSslDisplay('both', this)">📋 Cả trùng và không trùng</div>
+              <div class="radio-btn" data-display="duplicate" onclick="setSslDisplay('duplicate', this)">✅ Chỉ dòng trùng</div>
+              <div class="radio-btn" data-display="unique" onclick="setSslDisplay('unique', this)">❌ Chỉ dòng không trùng</div>
+            </div>
+          </div>
+          
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="soSanhList()">▶ So sánh</button>
+            <button class="btn btn-red" onclick="clearSslAll()">🗑 Xóa tất cả</button>
+          </div>
+        </div>
+        
+        <div class="card" style="position:relative">
+          <div class="card-title">Kết quả <span class="badge" id="ssl-cnt">0</span></div>
+          <div class="result-box" id="ssl-result">—</div>
+          <button class="copy-btn" id="ssl-cb" onclick="cp('ssl-result','ssl-cb')">Copy</button>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">📊 Thống kê chi tiết</div>
+          <div class="stats-row">
+            <div class="stat-pill">📋 List 1: <b id="ssl-stat-list1">0</b></div>
+            <div class="stat-pill">📋 List 2: <b id="ssl-stat-list2">0</b></div>
+            <div class="stat-pill">✅ Dòng trùng: <b id="ssl-stat-dup">0</b></div>
+            <div class="stat-pill">❌ Dòng không trùng: <b id="ssl-stat-unique">0</b></div>
+          </div>
+          <div id="ssl-extra-stats" style="margin-top: 8px; font-size: 12px; color: var(--muted);"></div>
+          
+          <div style="margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+              <span>Tỷ lệ trùng:</span>
+              <span id="ssl-percent-dup">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="ssl-percent-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COOKIE -->
     <div class="panel" id="p-cookie">
       <div class="two-col">
         <div class="card col-full">
@@ -449,7 +520,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ POMODORO ══ -->
+    <!-- POMODORO -->
     <div class="panel" id="p-pomodoro">
       <div class="two-col">
         <div class="card">
@@ -481,7 +552,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ EDIT TEXT ══ -->
+    <!-- EDIT TEXT -->
     <div class="panel" id="p-edit-text">
       <div class="two-col">
         <div class="card col-full">
@@ -504,15 +575,12 @@ textarea { resize: vertical; min-height: 140px; }
             <button class="btn btn-green" onclick="et('trimlines')">Trim mỗi dòng</button>
             <button class="btn btn-green" onclick="et('removespaces')">Xóa khoảng cách thừa</button>
             <button class="btn btn-green" onclick="et('removeblank')">Xóa dòng trống</button>
-            <button class="btn btn-green" onclick="et('removepunct')">Xóa dấu câu</button>
             <button class="btn btn-yellow" onclick="et('reverse')">Đảo ký tự</button>
             <button class="btn btn-yellow" onclick="et('reverselines')">Đảo thứ tự dòng</button>
             <button class="btn btn-yellow" onclick="et('sort')">Sắp xếp A→Z</button>
             <button class="btn btn-yellow" onclick="et('sortz')">Sắp xếp Z→A</button>
             <button class="btn btn-purple" onclick="et('numbering')">Đánh số dòng</button>
             <button class="btn btn-purple" onclick="et('strip-num')">Xóa số đầu dòng</button>
-            <button class="btn btn-purple" onclick="et('html-escape')">HTML Escape</button>
-            <button class="btn btn-purple" onclick="et('html-unescape')">HTML Unescape</button>
             <button class="btn btn-red" onclick="clearAll('et-input','et-result')">🗑 Xóa</button>
           </div>
         </div>
@@ -535,7 +603,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ UID → YEAR ══ -->
+    <!-- UID → YEAR -->
     <div class="panel" id="p-uid-year">
       <div class="two-col">
         <div class="card col-full">
@@ -554,7 +622,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ CẮT CHUỖI ══ -->
+    <!-- CẮT CHUỖI -->
     <div class="panel" id="p-cat-chuoi">
       <div class="two-col">
         <div class="card col-full">
@@ -593,7 +661,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ CẮT LINE ══ -->
+    <!-- CẮT LINE -->
     <div class="panel" id="p-cat-line">
       <div class="two-col">
         <div class="card col-full">
@@ -618,7 +686,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ GHÉP DÒNG ══ -->
+    <!-- GHÉP DÒNG -->
     <div class="panel" id="p-ghep-dong">
       <div class="two-col">
         <div class="card col-full">
@@ -641,68 +709,34 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ TRÙNG LẶP (MỚI - GIỐNG ẢNH) ══ -->
-    <div class="panel active" id="p-trung-lap">
+    <!-- TRÙNG LẶP -->
+    <div class="panel" id="p-trung-lap">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🔁 Xử lý trùng lặp giữa hai danh sách</div>
-          
-          <!-- Loại bỏ trùng lặp? toggle -->
-          <div class="toggle-wrap">
-            <label class="toggle"><input type="checkbox" id="tl-dedup" checked><span class="toggle-slider"></span></label>
-            <span class="toggle-label">Loại bỏ trùng lặp?</span>
-          </div>
-          
-          <!-- Nội dung A -->
-          <div class="field-row">
-            <span class="field-label">Nội dung A</span>
-            <textarea id="tl-input-a" rows="5" placeholder="Nhập danh sách A, mỗi dòng một giá trị...&#10;user1@example.com&#10;user2@example.com&#10;user3@example.com"></textarea>
-          </div>
-          
-          <!-- Nội dung B -->
-          <div class="field-row">
-            <span class="field-label">Nội dung B</span>
-            <textarea id="tl-input-b" rows="5" placeholder="Nhập danh sách B, mỗi dòng một giá trị...&#10;user2@example.com&#10;user3@example.com&#10;user4@example.com"></textarea>
-          </div>
-          
-          <!-- Radio group: Bỏ dòng trùng / Giữ dòng trùng -->
-          <div class="field-row">
-            <span class="field-label">Thực thi</span>
-            <div class="radio-group" id="tl-action-group">
-              <div class="radio-btn" data-action="remove" onclick="setTlAction('remove', this)">Bỏ dòng trùng</div>
-              <div class="radio-btn active" data-action="keep" onclick="setTlAction('keep', this)">Giữ dòng trùng</div>
-            </div>
-          </div>
-          
-          <!-- Button Trigger và Xóa -->
-          <div class="btn-bar">
-            <button class="btn btn-blue" onclick="processTlDuplicate()">▶ Trigger</button>
-            <button class="btn btn-red" onclick="clearTlAll()">🗑 Xóa</button>
+          <div class="card-title">🔁 Xóa / Tìm dòng trùng lặp</div>
+          <textarea id="tl-input" placeholder="line1&#10;line2&#10;line1&#10;line3..."></textarea>
+          <div class="btn-bar" style="margin-top:10px;align-items:center">
+            <button class="btn btn-blue" onclick="trungLap('remove')">🔁 Xóa trùng</button>
+            <button class="btn btn-yellow" onclick="trungLap('find')">🔍 Chỉ giữ bản trùng</button>
+            <button class="btn btn-sky" onclick="trungLap('count')">📊 Đếm số lần trùng</button>
+            <label class="chk"><input type="checkbox" id="tl-case"> Phân biệt hoa/thường</label>
+            <label class="chk"><input type="checkbox" id="tl-trim" checked> Trim</label>
+            <label class="chk"><input type="checkbox" id="tl-sort"> Sắp xếp</label>
           </div>
         </div>
-        
-        <!-- Kết quả -->
         <div class="card" style="position:relative">
           <div class="card-title">Kết quả <span class="badge" id="tl-cnt">0</span></div>
           <div class="result-box" id="tl-result">—</div>
           <button class="copy-btn" id="tl-cb" onclick="cp('tl-result','tl-cb')">Copy</button>
         </div>
-        
-        <!-- Thống kê -->
         <div class="card">
-          <div class="card-title">📊 Thống kê</div>
-          <div class="stats-row">
-            <div class="stat-pill">Dòng A: <b id="tl-stat-a">0</b></div>
-            <div class="stat-pill">Dòng B: <b id="tl-stat-b">0</b></div>
-            <div class="stat-pill">Dòng trùng: <b id="tl-stat-dup">0</b></div>
-            <div class="stat-pill">Kết quả: <b id="tl-stat-result">0</b></div>
-          </div>
-          <div id="tl-extra-stats" style="margin-top:8px; font-size:12px; color:var(--muted)"></div>
+          <div class="card-title">Thống kê</div>
+          <div id="tl-stats" style="font-size:13px;line-height:2;color:var(--muted)">—</div>
         </div>
       </div>
     </div>
 
-    <!-- ══ ĐẢO TỪ ══ -->
+    <!-- ĐẢO TỪ -->
     <div class="panel" id="p-dao-tu">
       <div class="two-col">
         <div class="card col-full">
@@ -724,7 +758,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ GHÉP CHUỖI ══ -->
+    <!-- GHÉP CHUỖI -->
     <div class="panel" id="p-ghep-chuoi">
       <div class="two-col">
         <div class="card">
@@ -754,7 +788,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ CHIA CẮT DÒNG ══ -->
+    <!-- CHIA CẮT DÒNG -->
     <div class="panel" id="p-chia-cat-dong">
       <div class="two-col">
         <div class="card col-full">
@@ -778,7 +812,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ LỌC CHUỖI ══ -->
+    <!-- LỌC CHUỖI -->
     <div class="panel" id="p-loc-chuoi">
       <div class="two-col">
         <div class="card col-full">
@@ -811,7 +845,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ LỌC CHỮ ══ -->
+    <!-- LỌC CHỮ -->
     <div class="panel" id="p-loc-chu">
       <div class="two-col">
         <div class="card col-full">
@@ -827,7 +861,6 @@ textarea { resize: vertical; min-height: 140px; }
             <button class="btn btn-green" onclick="locChu('remove-space')">Xóa khoảng trắng</button>
             <button class="btn btn-green" onclick="locChu('remove-emoji')">Xóa Emoji</button>
             <button class="btn btn-green" onclick="locChu('remove-url')">Xóa URL</button>
-            <button class="btn btn-green" onclick="locChu('remove-html')">Xóa HTML tags</button>
             <button class="btn btn-yellow" onclick="locChu('extract-email')">Trích xuất Email</button>
             <button class="btn btn-yellow" onclick="locChu('extract-url')">Trích xuất URL</button>
             <button class="btn btn-yellow" onclick="locChu('extract-num')">Trích xuất số</button>
@@ -847,7 +880,7 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ COPY FILE ══ -->
+    <!-- COPY FILE -->
     <div class="panel" id="p-copy-file">
       <div class="two-col">
         <div class="card col-full">
@@ -855,11 +888,10 @@ textarea { resize: vertical; min-height: 140px; }
           <div class="field-row"><span class="field-label">Danh sách 1</span><textarea id="cf-a" style="min-height:100px" placeholder="Dán danh sách 1..."></textarea></div>
           <div class="field-row"><span class="field-label">Danh sách 2</span><textarea id="cf-b" style="min-height:100px" placeholder="Dán danh sách 2..."></textarea></div>
           <div class="btn-bar">
-            <button class="btn btn-blue" onclick="copyFile('diff-a')">A trừ B (có trong A, không trong B)</button>
-            <button class="btn btn-blue" onclick="copyFile('diff-b')">B trừ A (có trong B, không trong A)</button>
-            <button class="btn btn-sky" onclick="copyFile('intersect')">Giao (có trong cả A và B)</button>
-            <button class="btn btn-green" onclick="copyFile('union')">Hợp (tất cả, không trùng)</button>
-            <button class="btn btn-yellow" onclick="copyFile('common')">Chỉ phần trùng nhau</button>
+            <button class="btn btn-blue" onclick="copyFile('diff-a')">A trừ B</button>
+            <button class="btn btn-blue" onclick="copyFile('diff-b')">B trừ A</button>
+            <button class="btn btn-sky" onclick="copyFile('intersect')">Giao (A∩B)</button>
+            <button class="btn btn-green" onclick="copyFile('union')">Hợp (A∪B)</button>
           </div>
         </div>
         <div class="card col-full" style="position:relative">
@@ -870,20 +902,15 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ ẢNH HTML ══ -->
+    <!-- ẢNH HTML -->
     <div class="panel" id="p-anh-html">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🖼️ Tạo HTML Image Tags từ URL</div>
-          <textarea id="ah-input" placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.png&#10;..."></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Alt text</span><input type="text" id="ah-alt" placeholder="mô tả ảnh"></div>
-          <div class="field-row"><span class="field-label">Width</span><input type="text" id="ah-width" placeholder="300px" style="max-width:100px"></div>
-          <div class="field-row"><span class="field-label">Height</span><input type="text" id="ah-height" placeholder="auto" style="max-width:100px"></div>
-          <div class="field-row"><span class="field-label">Class</span><input type="text" id="ah-class" placeholder="img-class"></div>
-          <div class="btn-bar" style="align-items:center">
-            <button class="btn btn-blue" onclick="genImgHTML()">🖼 Tạo &lt;img&gt; tags</button>
-            <button class="btn btn-sky" onclick="genFigureHTML()">Tạo &lt;figure&gt;</button>
-            <label class="chk"><input type="checkbox" id="ah-lazy" checked> Lazy load</label>
+          <div class="card-title">🖼️ Tạo HTML Image Tags</div>
+          <textarea id="ah-input" placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.png"></textarea>
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="genImgHTML()">Tạo &lt;img&gt; tags</button>
+            <button class="btn btn-green" onclick="genFigureHTML()">Tạo &lt;figure&gt;</button>
           </div>
         </div>
         <div class="card" style="position:relative">
@@ -894,24 +921,15 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ LINK HTML ══ -->
+    <!-- LINK HTML -->
     <div class="panel" id="p-link-html">
       <div class="two-col">
         <div class="card col-full">
           <div class="card-title">🔗 Tạo HTML Link Tags</div>
-          <textarea id="lh-input" placeholder="Google|https://google.com&#10;Facebook|https://facebook.com&#10;..."></textarea>
-          <div class="field-row" style="margin-top:10px">
-            <span class="field-label">Mở tab</span>
-            <select id="lh-target" style="max-width:150px">
-              <option value="_blank">Mở tab mới</option>
-              <option value="_self">Cùng tab</option>
-            </select>
-          </div>
-          <div class="field-row"><span class="field-label">Class</span><input type="text" id="lh-class" placeholder="link-class"></div>
-          <div class="btn-bar" style="align-items:center">
-            <button class="btn btn-blue" onclick="genLinkHTML()">🔗 Tạo &lt;a&gt; tags</button>
-            <button class="btn btn-sky" onclick="genLinkList()">Tạo &lt;ul&gt; list</button>
-            <label class="chk"><input type="checkbox" id="lh-norel" checked> noopener noreferrer</label>
+          <textarea id="lh-input" placeholder="Google|https://google.com&#10;Facebook|https://facebook.com"></textarea>
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="genLinkHTML()">Tạo &lt;a&gt; tags</button>
+            <button class="btn btn-green" onclick="genLinkList()">Tạo &lt;ul&gt; list</button>
           </div>
         </div>
         <div class="card" style="position:relative">
@@ -922,128 +940,90 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ LỌC CSV ══ -->
+    <!-- LỌC CSV -->
     <div class="panel" id="p-loc-csv">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">📊 Lọc CSV / TSV</div>
-          <textarea id="csv-input" placeholder="col1,col2,col3&#10;a,b,c&#10;d,e,f..." style="min-height:150px"></textarea>
-          <div class="field-row" style="margin-top:10px">
-            <span class="field-label">Phân cách</span>
-            <select id="csv-sep-type" style="max-width:120px">
-              <option value=",">Dấu phẩy (,)</option>
-              <option value=";">Dấu chấm phẩy (;)</option>
-              <option value="\t">Tab</option>
-              <option value="|">Dọc (|)</option>
-            </select>
-          </div>
-          <div class="field-row"><span class="field-label">Lấy cột số</span><input type="text" id="csv-cols" placeholder="1,2,4 (bắt đầu từ 1)"></div>
-          <div class="field-row"><span class="field-label">Lọc dòng chứa</span><input type="text" id="csv-filter" placeholder="từ khóa lọc"></div>
+          <div class="card-title">📊 Lọc CSV</div>
+          <textarea id="csv-input" placeholder="col1,col2,col3&#10;a,b,c&#10;d,e,f"></textarea>
           <div class="btn-bar">
-            <button class="btn btn-blue" onclick="filterCSV()">▶ Lọc</button>
+            <button class="btn btn-blue" onclick="filterCSV()">Lọc theo từ khóa</button>
             <button class="btn btn-sky" onclick="csvExtractCols()">Lấy cột</button>
-            <button class="btn btn-green" onclick="csvToList()">→ Danh sách dòng</button>
-            <button class="btn btn-yellow" onclick="csvStats()">📊 Thống kê</button>
           </div>
         </div>
         <div class="card col-full" style="position:relative">
-          <div class="card-title">Kết quả <span class="badge" id="csv-cnt">0</span></div>
+          <div class="card-title">Kết quả</div>
           <div class="result-box" id="csv-result">—</div>
           <button class="copy-btn" id="csv-cb" onclick="cp('csv-result','csv-cb')">Copy</button>
         </div>
       </div>
     </div>
 
-    <!-- ══ GHÉP FILE ══ -->
+    <!-- GHÉP FILE -->
     <div class="panel" id="p-ghep-file">
       <div class="two-col">
         <div class="card col-full">
           <div class="card-title">📎 Gộp nội dung nhiều file</div>
-          <textarea id="gf-input" placeholder="Nội dung file 1&#10;---&#10;Nội dung file 2&#10;---&#10;Nội dung file 3" style="min-height:180px"></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Phân cách bởi</span><input type="text" id="gf-sep" value="---" style="max-width:120px"></div>
-          <div class="btn-bar" style="align-items:center">
+          <textarea id="gf-input" placeholder="Nội dung file 1&#10;---&#10;Nội dung file 2"></textarea>
+          <div class="btn-bar">
             <button class="btn btn-blue" onclick="ghepFile()">📎 Gộp lại</button>
-            <label class="chk"><input type="checkbox" id="gf-empty"> Bỏ dòng trống giữa</label>
-            <label class="chk"><input type="checkbox" id="gf-dedup"> Xóa trùng sau gộp</label>
           </div>
         </div>
         <div class="card" style="position:relative">
-          <div class="card-title">Kết quả <span class="badge" id="gf-cnt">0</span></div>
+          <div class="card-title">Kết quả</div>
           <div class="result-box" id="gf-result">—</div>
           <button class="copy-btn" id="gf-cb" onclick="cp('gf-result','gf-cb')">Copy</button>
         </div>
       </div>
     </div>
 
-    <!-- ══ JSON ══ -->
+    <!-- JSON -->
     <div class="panel" id="p-json">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">📦 JSON Formatter & Validator</div>
-          <textarea id="json-input" placeholder='{"key":"value","arr":[1,2,3]}' style="min-height:150px"></textarea>
-          <div class="btn-bar" style="margin-top:10px;align-items:center">
-            <button class="btn btn-blue" onclick="fmtJSON()">✨ Format đẹp</button>
-            <button class="btn btn-sky" onclick="minJSON()">⚡ Minify</button>
-            <button class="btn btn-green" onclick="valJSON()">✔ Validate</button>
-            <button class="btn btn-yellow" onclick="jsonToList()">→ Danh sách key</button>
-            <button class="btn btn-purple" onclick="jsonExtract()">Trích xuất value</button>
-            <select id="json-indent" style="max-width:100px">
-              <option value="2">Indent 2</option>
-              <option value="4">Indent 4</option>
-              <option value="1">Indent 1</option>
-            </select>
+          <div class="card-title">📦 JSON Formatter</div>
+          <textarea id="json-input" placeholder='{"key":"value"}'></textarea>
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="fmtJSON()">Format</button>
+            <button class="btn btn-green" onclick="valJSON()">Validate</button>
           </div>
         </div>
         <div class="card" style="position:relative">
           <div class="card-title">Kết quả</div>
-          <div class="result-box" id="json-result" style="min-height:180px">—</div>
+          <div class="result-box" id="json-result">—</div>
           <button class="copy-btn" id="json-cb" onclick="cp('json-result','json-cb')">Copy</button>
-        </div>
-        <div class="card">
-          <div class="card-title">Trạng thái</div>
-          <div id="json-status" style="font-size:13px;line-height:2">—</div>
         </div>
       </div>
     </div>
 
-    <!-- ══ LỌC TAG ══ -->
+    <!-- LỌC TAG -->
     <div class="panel" id="p-loc-tag">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🏷️ Lọc tag / Trích xuất từ HTML</div>
-          <textarea id="lt-input" placeholder="&lt;div class=&quot;name&quot;&gt;Nội dung&lt;/div&gt;&#10;&lt;a href=&quot;https://...&quot;&gt;Link&lt;/a&gt;..."></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Tag cần lấy</span><input type="text" id="lt-tag" placeholder="vd: a, div, span, img..."></div>
-          <div class="field-row"><span class="field-label">Attribute</span><input type="text" id="lt-attr" placeholder="vd: href, src, class, data-id..."></div>
+          <div class="card-title">🏷️ Lọc tag HTML</div>
+          <textarea id="lt-input" placeholder='<a href="https://example.com">Link</a>'></textarea>
           <div class="btn-bar">
-            <button class="btn btn-blue" onclick="locTag('extract-content')">📤 Lấy nội dung tag</button>
-            <button class="btn btn-sky" onclick="locTag('extract-attr')">📤 Lấy giá trị attr</button>
-            <button class="btn btn-green" onclick="locTag('strip-all')">🧹 Xóa tất cả HTML tags</button>
-            <button class="btn btn-yellow" onclick="locTag('strip-keep')">Xóa tag, giữ nội dung</button>
-            <button class="btn btn-red" onclick="locTag('extract-links')">Trích xuất tất cả links</button>
-            <button class="btn btn-purple" onclick="locTag('extract-imgs')">Trích xuất tất cả ảnh</button>
+            <button class="btn btn-blue" onclick="locTag('extract-links')">Trích xuất link</button>
+            <button class="btn btn-green" onclick="locTag('strip-all')">Xóa HTML tags</button>
           </div>
         </div>
         <div class="card" style="position:relative">
-          <div class="card-title">Kết quả <span class="badge" id="lt-cnt">0</span></div>
+          <div class="card-title">Kết quả</div>
           <div class="result-box" id="lt-result">—</div>
           <button class="copy-btn" id="lt-cb" onclick="cp('lt-result','lt-cb')">Copy</button>
         </div>
       </div>
     </div>
 
-    <!-- ══ TÍNH SUB ══ -->
+    <!-- TÍNH SUB -->
     <div class="panel" id="p-tinh-sub">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">📐 Tính Sub - Đếm số lượng theo điều kiện</div>
+          <div class="card-title">📐 Tính Sub - Đếm số lượng</div>
           <textarea id="ts-input" placeholder="Dán dữ liệu vào đây..."></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Từ khóa đếm</span><input type="text" id="ts-keyword" placeholder="Từ khóa cần đếm số dòng chứa"></div>
-          <div class="field-row"><span class="field-label">Tách bởi</span><input type="text" id="ts-sep" value="|" style="max-width:80px"></div>
-          <div class="field-row"><span class="field-label">Cột số</span><input type="number" id="ts-col" value="1" min="1" style="max-width:80px"></div>
+          <div class="field-row"><span class="field-label">Từ khóa đếm</span><input type="text" id="ts-keyword" placeholder="Từ khóa cần đếm"></div>
           <div class="btn-bar">
             <button class="btn btn-blue" onclick="tinhSub()">▶ Đếm</button>
-            <button class="btn btn-sky" onclick="tinhSubGroup()">📊 Đếm theo nhóm</button>
-            <button class="btn btn-green" onclick="tinhSubSum()">➕ Tổng cột số</button>
           </div>
         </div>
         <div class="card col-full" style="position:relative">
@@ -1054,29 +1034,17 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ JOIN CHỮ ══ -->
+    <!-- JOIN CHỮ -->
     <div class="panel" id="p-join-chu">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🔡 Join chữ - Thêm ký tự vào đầu/cuối mỗi dòng</div>
-          <textarea id="jc-input" placeholder="Dòng 1&#10;Dòng 2&#10;Dòng 3..."></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Thêm vào đầu</span><input type="text" id="jc-prefix" placeholder="vd: 'https://' hoặc '&quot;'"></div>
-          <div class="field-row"><span class="field-label">Thêm vào cuối</span><input type="text" id="jc-suffix" placeholder="vd: '.com' hoặc ','"></div>
-          <div class="field-row"><span class="field-label">Bao quanh bởi</span>
-            <select id="jc-wrap" style="max-width:150px">
-              <option value="">Không</option>
-              <option value="quote-single">Dấu nháy đơn ''</option>
-              <option value="quote-double">Dấu nháy kép ""</option>
-              <option value="bracket">Ngoặc vuông []</option>
-              <option value="paren">Ngoặc tròn ()</option>
-              <option value="curly">Ngoặc nhọn {}</option>
-            </select>
-          </div>
+          <div class="card-title">🔡 Join chữ - Thêm ký tự đầu/cuối</div>
+          <textarea id="jc-input" placeholder="Dòng 1&#10;Dòng 2"></textarea>
+          <div class="field-row"><span class="field-label">Thêm vào đầu</span><input type="text" id="jc-prefix" placeholder="vd: https://"></div>
+          <div class="field-row"><span class="field-label">Thêm vào cuối</span><input type="text" id="jc-suffix" placeholder="vd: .com"></div>
           <div class="btn-bar">
             <button class="btn btn-blue" onclick="joinChu()">▶ Áp dụng</button>
-            <button class="btn btn-sky" onclick="joinChuSQL()">SQL IN (?,?,?)</button>
-            <button class="btn btn-green" onclick="joinChuArray()">JS Array ["a","b"]</button>
-            <button class="btn btn-yellow" onclick="joinChuPHP()">PHP Array ["a","b"]</button>
+            <button class="btn btn-sky" onclick="joinChuSQL()">SQL IN (...)</button>
           </div>
         </div>
         <div class="card" style="position:relative">
@@ -1087,78 +1055,58 @@ textarea { resize: vertical; min-height: 140px; }
       </div>
     </div>
 
-    <!-- ══ ACCOUNT ══ -->
+    <!-- ACCOUNT -->
     <div class="panel" id="p-account">
       <div class="two-col">
         <div class="card col-full">
           <div class="card-title">👤 Xử lý Account (user|pass)</div>
-          <textarea id="ac-input" placeholder="user1@gmail.com|password123&#10;user2@yahoo.com|pass456&#10;..."></textarea>
-          <div class="field-row" style="margin-top:10px"><span class="field-label">Tách bởi</span><input type="text" id="ac-sep" value="|" style="max-width:80px"></div>
+          <textarea id="ac-input" placeholder="user1@gmail.com|password123"></textarea>
+          <div class="field-row"><span class="field-label">Tách bởi</span><input type="text" id="ac-sep" value="|"></div>
           <div class="btn-bar">
             <button class="btn btn-blue" onclick="processAcc('user')">📧 Chỉ lấy Username</button>
             <button class="btn btn-blue" onclick="processAcc('pass')">🔑 Chỉ lấy Password</button>
             <button class="btn btn-sky" onclick="processAcc('swap')">↔ Đổi user↔pass</button>
-            <button class="btn btn-sky" onclick="processAcc('mask')">🕶 Che password</button>
-            <button class="btn btn-green" onclick="processAcc('check-email')">✔ Kiểm tra email hợp lệ</button>
-            <button class="btn btn-yellow" onclick="processAcc('stats')">📊 Thống kê domain</button>
-            <button class="btn btn-purple" onclick="processAcc('dedup')">🔁 Xóa trùng username</button>
           </div>
         </div>
         <div class="card" style="position:relative">
-          <div class="card-title">Kết quả <span class="badge" id="ac-cnt">0</span></div>
+          <div class="card-title">Kết quả</div>
           <div class="result-box" id="ac-result">—</div>
           <button class="copy-btn" id="ac-cb" onclick="cp('ac-result','ac-cb')">Copy</button>
-        </div>
-        <div class="card">
-          <div class="card-title">Lọc theo domain</div>
-          <div class="field-row"><span class="field-label">Domain</span><input type="text" id="ac-domain" placeholder="gmail.com, yahoo.com..."></div>
-          <div class="btn-bar">
-            <button class="btn btn-blue" onclick="filterDomain()">✅ Giữ domain này</button>
-            <button class="btn btn-red" onclick="filterDomainExclude()">❌ Loại domain này</button>
-          </div>
-          <div class="result-box" id="ac-domain-result" style="min-height:80px">—</div>
         </div>
       </div>
     </div>
 
-    <!-- ══ LOẠI TEXT ══ -->
+    <!-- LOẠI TEXT -->
     <div class="panel" id="p-loai-text">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">🔠 Loại text - Phân loại và đếm ký tự</div>
+          <div class="card-title">🔠 Loại text - Phân tích văn bản</div>
           <textarea id="lx-input" placeholder="Nhập văn bản để phân tích..."></textarea>
-          <div class="btn-bar" style="margin-top:10px">
+          <div class="btn-bar">
             <button class="btn btn-blue" onclick="loaiText('all')">📊 Phân tích tất cả</button>
             <button class="btn btn-sky" onclick="loaiText('count-lines')">Đếm dòng</button>
             <button class="btn btn-sky" onclick="loaiText('count-words')">Đếm từ</button>
             <button class="btn btn-sky" onclick="loaiText('count-chars')">Đếm ký tự</button>
-            <button class="btn btn-green" onclick="loaiText('freq-char')">Tần suất ký tự</button>
-            <button class="btn btn-green" onclick="loaiText('freq-word')">Tần suất từ</button>
-            <button class="btn btn-yellow" onclick="loaiText('readtime')">⏱ Thời gian đọc</button>
           </div>
         </div>
         <div class="card col-full" style="position:relative">
           <div class="card-title">Kết quả phân tích</div>
-          <div class="result-box" id="lx-result" style="min-height:200px">—</div>
+          <div class="result-box" id="lx-result">—</div>
           <button class="copy-btn" id="lx-cb" onclick="cp('lx-result','lx-cb')">Copy</button>
         </div>
       </div>
     </div>
 
-    <!-- ══ FB LINK ══ -->
+    <!-- FB LINK -->
     <div class="panel" id="p-fb-link">
       <div class="two-col">
         <div class="card col-full">
-          <div class="card-title">📘 Fb link - Tạo và xử lý link Facebook</div>
-          <textarea id="fb-input" placeholder="Dán UID hoặc link Facebook, mỗi dòng một cái...&#10;100012345678&#10;https://www.facebook.com/profile.php?id=100012345678&#10;username.page"></textarea>
-          <div class="btn-bar" style="margin-top:10px">
-            <button class="btn btn-blue" onclick="fbLink('uid-to-link')">🔗 UID → Link profile</button>
-            <button class="btn btn-blue" onclick="fbLink('uid-to-page')">📄 UID → Link page</button>
-            <button class="btn btn-sky" onclick="fbLink('link-to-uid')">🆔 Link → UID</button>
-            <button class="btn btn-sky" onclick="fbLink('profile-link')">Tạo link cá nhân</button>
-            <button class="btn btn-green" onclick="fbLink('mbasic')">📱 Link mbasic</button>
-            <button class="btn btn-green" onclick="fbLink('graph')">📡 Graph API link</button>
-            <button class="btn btn-yellow" onclick="fbLink('share')">📤 Link share</button>
+          <div class="card-title">📘 Fb link - Xử lý link Facebook</div>
+          <textarea id="fb-input" placeholder="100012345678&#10;https://www.facebook.com/profile.php?id=100012345678"></textarea>
+          <div class="btn-bar">
+            <button class="btn btn-blue" onclick="fbLink('uid-to-link')">UID → Link profile</button>
+            <button class="btn btn-sky" onclick="fbLink('link-to-uid')">Link → UID</button>
+            <button class="btn btn-green" onclick="fbLink('mbasic')">Link mbasic</button>
           </div>
         </div>
         <div class="card col-full" style="position:relative">
@@ -1175,726 +1123,750 @@ textarea { resize: vertical; min-height: 140px; }
 <div class="toast" id="toast">✅ Đã copy!</div>
 
 <script>
-// ─── BIẾN TOÀN CỤC CHO TRÙNG LẶP ───
-let currentTlAction = 'keep'; // 'keep' hoặc 'remove'
-
-// ─── NAVIGATION ───────────────────────────────────────────────────────────
+// ======================== NAVIGATION ========================
 const TITLES = {
-  'cookie':['🍪 Cookie','Xử lý và lọc cookie'],
-  'pomodoro':['🍅 Pomodoro','Quản lý thời gian tập trung'],
-  'edit-text':['✏️ Edit Text','Chuyển đổi và xử lý văn bản'],
-  'uid-year':['🆔 UID → Năm','Chuyển UID Facebook sang ngày tạo'],
-  'cat-chuoi':['✂️ Cắt Chuỗi','Cắt cột từ chuỗi có dấu phân cách'],
-  'cat-line':['📄 Cắt Line','Lấy một phần dòng'],
-  'ghep-dong':['🔗 Ghép dòng','Nối nhiều dòng thành một'],
-  'trung-lap':['🔁 Trùng lặp','Xử lý dòng trùng giữa hai danh sách'],
-  'dao-tu':['↩️ Đảo từ','Đảo ký tự, từ, thứ tự dòng'],
-  'ghep-chuoi':['➕ Ghép Chuỗi','Ghép hai danh sách với nhau'],
-  'chia-cat-dong':['⚡ Chia cắt dòng','Tách chuỗi thành nhiều dòng'],
-  'loc-chuoi':['🔍 Lọc Chuỗi','Tìm kiếm và lọc dòng'],
-  'loc-chu':['🔤 Lọc Chữ','Xóa hoặc giữ ký tự'],
-  'copy-file':['📋 Copy file','So sánh và xử lý hai danh sách'],
-  'anh-html':['🖼️ Ảnh html','Tạo HTML image tags'],
-  'link-html':['🔗 Link html','Tạo HTML anchor tags'],
-  'loc-csv':['📊 Lọc CSV','Xử lý dữ liệu CSV/TSV'],
-  'ghep-file':['📎 Ghép file','Gộp nội dung nhiều file'],
-  'json':['📦 JSON','Format, validate, xử lý JSON'],
-  'loc-tag':['🏷️ Lọc tag','Trích xuất nội dung từ HTML'],
-  'tinh-sub':['📐 Tính Sub','Đếm số lượng theo điều kiện'],
-  'join-chu':['🔡 Join chữ','Thêm ký tự đầu/cuối mỗi dòng'],
-  'account':['👤 Account','Xử lý danh sách tài khoản'],
-  'loai-text':['🔠 Loại text','Phân tích và phân loại văn bản'],
-  'fb-link':['📘 Fb link','Tạo và xử lý link Facebook'],
+  'so-sanh-list': ['🔍 So sánh 2 list', 'So sánh list 2 với list 1'],
+  'cookie': ['🍪 Cookie', 'Xử lý và lọc cookie'],
+  'pomodoro': ['🍅 Pomodoro', 'Quản lý thời gian tập trung'],
+  'edit-text': ['✏️ Edit Text', 'Chuyển đổi và xử lý văn bản'],
+  'uid-year': ['🆔 UID → Năm', 'Chuyển UID Facebook sang ngày tạo'],
+  'cat-chuoi': ['✂️ Cắt Chuỗi', 'Cắt cột từ chuỗi có dấu phân cách'],
+  'cat-line': ['📄 Cắt Line', 'Lấy một phần dòng'],
+  'ghep-dong': ['🔗 Ghép dòng', 'Nối nhiều dòng thành một'],
+  'trung-lap': ['🔁 Trùng lặp', 'Xóa hoặc tìm dòng trùng lặp'],
+  'dao-tu': ['↩️ Đảo từ', 'Đảo ký tự, từ, thứ tự dòng'],
+  'ghep-chuoi': ['➕ Ghép Chuỗi', 'Ghép hai danh sách với nhau'],
+  'chia-cat-dong': ['⚡ Chia cắt dòng', 'Tách chuỗi thành nhiều dòng'],
+  'loc-chuoi': ['🔍 Lọc Chuỗi', 'Tìm kiếm và lọc dòng'],
+  'loc-chu': ['🔤 Lọc Chữ', 'Xóa hoặc giữ ký tự'],
+  'copy-file': ['📋 Copy file', 'So sánh và xử lý hai danh sách'],
+  'anh-html': ['🖼️ Ảnh html', 'Tạo HTML image tags'],
+  'link-html': ['🔗 Link html', 'Tạo HTML anchor tags'],
+  'loc-csv': ['📊 Lọc CSV', 'Xử lý dữ liệu CSV/TSV'],
+  'ghep-file': ['📎 Ghép file', 'Gộp nội dung nhiều file'],
+  'json': ['📦 JSON', 'Format, validate, xử lý JSON'],
+  'loc-tag': ['🏷️ Lọc tag', 'Trích xuất nội dung từ HTML'],
+  'tinh-sub': ['📐 Tính Sub', 'Đếm số lượng theo điều kiện'],
+  'join-chu': ['🔡 Join chữ', 'Thêm ký tự đầu/cuối mỗi dòng'],
+  'account': ['👤 Account', 'Xử lý danh sách tài khoản'],
+  'loai-text': ['🔠 Loại text', 'Phân tích và phân loại văn bản'],
+  'fb-link': ['📘 Fb link', 'Tạo và xử lý link Facebook'],
 };
 
 function go(id) {
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   event.currentTarget.classList.add('active');
-  document.getElementById('p-'+id).classList.add('active');
-  const t = TITLES[id]||[id,''];
+  document.getElementById('p-' + id).classList.add('active');
+  const t = TITLES[id] || [id, ''];
   document.getElementById('topbar-title').textContent = t[0];
   document.getElementById('topbar-sub').textContent = t[1];
 }
 
-// ─── UTILITIES ────────────────────────────────────────────────────────────
-function showToast(m='✅ Đã copy!') {
-  const t=document.getElementById('toast');
-  t.textContent=m; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+// ======================== UTILITIES ========================
+function showToast(m) {
+  const toast = document.getElementById('toast');
+  toast.textContent = m || '✅ Thành công!';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
 }
-function cp(elId,btnId) {
-  const txt=(document.getElementById(elId).innerText||'').trim();
-  if(!txt||txt==='—') return;
-  navigator.clipboard.writeText(txt).then(()=>{
-    const b=document.getElementById(btnId);
-    b.textContent='✓'; b.classList.add('ok');
-    showToast();
-    setTimeout(()=>{b.textContent='Copy';b.classList.remove('ok');},2000);
+
+function cp(elId, btnId) {
+  const txt = (document.getElementById(elId).innerText || '').trim();
+  if (!txt || txt === '—') return;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById(btnId);
+    const originalText = btn.textContent;
+    btn.textContent = '✓';
+    btn.classList.add('ok');
+    showToast('✅ Đã copy!');
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('ok');
+    }, 2000);
   });
 }
-function clearAll(...ids){ ids.forEach(id=>{ const el=document.getElementById(id); if(el){ if(el.tagName==='TEXTAREA'||el.tagName==='INPUT') el.value=''; else el.textContent='—'; } }); }
+
+function clearAll(...ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') el.value = '';
+      else el.textContent = '—';
+    }
+  });
+}
+
 function setResult(id, val, countId) {
-  const el=document.getElementById(id);
-  el.textContent=val||'—';
-  if(countId) document.getElementById(countId).textContent=(val?val.split('\n').filter(l=>l.trim()).length:0);
-}
-function getLines(id) { return document.getElementById(id).value.split('\n').filter(l=>l.trim()); }
-function sendBack(srcId,dstId){ const v=document.getElementById(srcId).innerText; if(v&&v!=='—') document.getElementById(dstId).value=v; }
-function shuffleLines(inId,outId){
-  const lines=getLines(inId);
-  for(let i=lines.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lines[i],lines[j]]=[lines[j],lines[i]];}
-  setResult(outId,lines.join('\n'));
-}
-
-// ─── COOKIE ──────────────────────────────────────────────────────────────
-function processCookie(){
-  let lines=getLines('cookie-input');
-  const sep=document.getElementById('cookie-sep').value||'|';
-  const key=document.getElementById('cookie-key').value.trim().toLowerCase();
-  const dedup=document.getElementById('cookie-dedup').checked;
-  if(dedup){const s=new Set();lines=lines.filter(l=>{if(s.has(l))return false;s.add(l);return true;});}
-  if(key) lines=lines.filter(l=>l.toLowerCase().includes(key));
-  setResult('cookie-result',lines.join('\n'),'cookie-cnt');
-  document.getElementById('cookie-stats').innerHTML=`Tổng: <b>${lines.length}</b> dòng`;
-}
-function cookieExtract(){
-  const lines=getLines('cookie-input');
-  const pairs=[];
-  lines.forEach(l=>{const m=l.match(/[\w.-]+=[\w%.-]*/g);if(m)pairs.push(...m);});
-  setResult('cookie-result',[...new Set(pairs)].join('\n'),'cookie-cnt');
-}
-function cookieFormat(){
-  const lines=getLines('cookie-input');
-  const r=lines.map(l=>l.split(/;\s*/).map(p=>p.trim()).filter(Boolean).join('\n')).join('\n---\n');
-  setResult('cookie-result',r);
-}
-
-// ─── POMODORO ─────────────────────────────────────────────────────────────
-let pomoTimer=null,pomoSecs=0,pomoTotal=0,pomoCycles=0,pomoShort=0,pomoPhase='focus',pomoRunning=false;
-function pomoInit(){
-  const f=parseInt(document.getElementById('pomo-focus').value)||25;
-  pomoTotal=pomoSecs=f*60; pomoPhase='focus';
-  document.getElementById('pomo-label').textContent='Tập trung 🎯';
-  pomoRender();
-}
-function pomoRender(){
-  const m=String(Math.floor(pomoSecs/60)).padStart(2,'0');
-  const s=String(pomoSecs%60).padStart(2,'0');
-  document.getElementById('pomo-time').textContent=`${m}:${s}`;
-  const pct=pomoTotal>0?(pomoSecs/pomoTotal*100):100;
-  document.getElementById('pomo-bar').style.width=pct+'%';
-}
-function pomoToggle(){
-  if(pomoRunning){
-    clearInterval(pomoTimer); pomoRunning=false;
-    document.getElementById('pomo-btn').textContent='▶ Tiếp tục';
-  } else {
-    if(!pomoSecs) pomoInit();
-    pomoRunning=true;
-    document.getElementById('pomo-btn').textContent='⏸ Tạm dừng';
-    pomoTimer=setInterval(()=>{
-      pomoSecs--;
-      if(pomoSecs<0){
-        clearInterval(pomoTimer); pomoRunning=false;
-        const snd=document.getElementById('pomo-sound').checked;
-        if(snd) try{new AudioContext().createOscillator&&(()=>{const a=new AudioContext();const o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();o.stop(a.currentTime+0.3);})();}catch(e){}
-        if(pomoPhase==='focus'){
-          pomoCycles++;
-          document.getElementById('pomo-cycles').textContent=pomoCycles;
-          const la=parseInt(document.getElementById('pomo-long-after').value)||4;
-          if(pomoCycles%la===0){
-            pomoTotal=pomoSecs=(parseInt(document.getElementById('pomo-break-l').value)||15)*60;
-            pomoPhase='long-break';
-            document.getElementById('pomo-label').textContent='Nghỉ dài ☕';
-          } else {
-            pomoTotal=pomoSecs=(parseInt(document.getElementById('pomo-break-s').value)||5)*60;
-            pomoPhase='short-break';
-            pomoShort++;
-            document.getElementById('pomo-short').textContent=pomoShort;
-            document.getElementById('pomo-label').textContent='Nghỉ ngắn 😌';
-          }
-        } else {
-          pomoTotal=pomoSecs=(parseInt(document.getElementById('pomo-focus').value)||25)*60;
-          pomoPhase='focus';
-          document.getElementById('pomo-label').textContent='Tập trung 🎯';
-        }
-        const log=document.getElementById('pomo-log');
-        const now=new Date().toLocaleTimeString('vi');
-        log.innerHTML+=`${now}: Kết thúc ${pomoPhase==='focus'?'nghỉ':'tập trung'}<br>`;
-        document.getElementById('pomo-btn').textContent='▶ Bắt đầu';
-      }
-      pomoRender();
-    },1000);
+  const el = document.getElementById(id);
+  el.textContent = val || '—';
+  if (countId) {
+    const lines = val ? val.split('\n').filter(l => l.trim()) : [];
+    document.getElementById(countId).textContent = lines.length;
   }
 }
-function pomoReset(){ clearInterval(pomoTimer); pomoRunning=false; pomoSecs=0; pomoInit(); document.getElementById('pomo-btn').textContent='▶ Bắt đầu'; }
-pomoInit();
 
-// ─── EDIT TEXT ────────────────────────────────────────────────────────────
-function etStats(){
-  const v=document.getElementById('et-input').value;
-  document.getElementById('et-c').textContent=v.length;
-  document.getElementById('et-w').textContent=v.trim()?v.trim().split(/\s+/).length:0;
-  document.getElementById('et-l').textContent=v.split('\n').length;
-}
-function et(type){
-  const v=document.getElementById('et-input').value; if(!v) return;
-  let r=v;
-  if(type==='upper') r=v.toUpperCase();
-  else if(type==='lower') r=v.toLowerCase();
-  else if(type==='title') r=v.replace(/\w\S*/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase());
-  else if(type==='sentence') r=v.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g,c=>c.toUpperCase());
-  else if(type==='camel') r=v.trim().replace(/[-_\s]+(.)/g,(_,c)=>c.toUpperCase()).replace(/^(.)/,c=>c.toLowerCase());
-  else if(type==='snake') r=v.trim().replace(/\s+/g,'_').replace(/([A-Z])/g,'_$1').replace(/^_/,'').toLowerCase();
-  else if(type==='kebab') r=v.trim().replace(/\s+/g,'-').replace(/([A-Z])/g,'-$1').replace(/^-/,'').toLowerCase();
-  else if(type==='trim') r=v.trim();
-  else if(type==='trimlines') r=v.split('\n').map(l=>l.trim()).join('\n');
-  else if(type==='removespaces') r=v.replace(/[ \t]{2,}/g,' ').trim();
-  else if(type==='removeblank') r=v.split('\n').filter(l=>l.trim()).join('\n');
-  else if(type==='removepunct') r=v.replace(/[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/g,'');
-  else if(type==='reverse') r=v.split('').reverse().join('');
-  else if(type==='reverselines') r=v.split('\n').reverse().join('\n');
-  else if(type==='sort') r=v.split('\n').sort((a,b)=>a.localeCompare(b)).join('\n');
-  else if(type==='sortz') r=v.split('\n').sort((a,b)=>b.localeCompare(a)).join('\n');
-  else if(type==='numbering') r=v.split('\n').map((l,i)=>`${i+1}. ${l}`).join('\n');
-  else if(type==='strip-num') r=v.split('\n').map(l=>l.replace(/^\d+\.\s*/,'')).join('\n');
-  else if(type==='html-escape') r=v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  else if(type==='html-unescape') r=v.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  document.getElementById('et-result').textContent=r;
-}
-function etFindReplace(){
-  const v=document.getElementById('et-input').value;
-  const f=document.getElementById('et-find').value; if(!f) return;
-  const rep=document.getElementById('et-rep').value;
-  const isRe=document.getElementById('et-fr-re').checked;
-  const cs=document.getElementById('et-fr-cs').checked;
-  let pat;
-  try{ pat=isRe?new RegExp(f,cs?'g':'gi'):new RegExp(f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),cs?'g':'gi'); }catch(e){showToast('❌ Regex lỗi');return;}
-  document.getElementById('et-result').textContent=v.replace(pat,rep);
+function getLines(id) {
+  return document.getElementById(id).value.split('\n').filter(l => l.trim());
 }
 
-// ─── UID → YEAR ───────────────────────────────────────────────────────────
-function uidConvert(){
-  const lines=getLines('uid-input');
-  const r=lines.map(uid=>{
-    uid=uid.trim();
-    const n=parseInt(uid);
-    if(isNaN(n)||n<=0) return `${uid} → ❌ UID không hợp lệ`;
-    const ms=(n/4194304+1149955200)*1000;
-    const d=new Date(ms);
-    return `${uid} → ${d.toLocaleDateString('vi-VN')} (${d.getFullYear()})`;
-  });
-  setResult('uid-result',r.join('\n'));
+function sendBack(srcId, dstId) {
+  const v = document.getElementById(srcId).innerText;
+  if (v && v !== '—') document.getElementById(dstId).value = v;
 }
 
-// ─── CẮT CHUỖI ───────────────────────────────────────────────────────────
-let ccType='xy';
-function ccSetType(t,el){
-  ccType=t;
-  document.querySelectorAll('#cc-type-group .radio-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('cc-xy-opts').style.display=t==='xy'?'':'none';
-  document.getElementById('cc-xyz-opts').style.display=t==='xyz'?'':'none';
-}
-function catChuoi(){
-  let lines=getLines('cc-input');
-  const sep=document.getElementById('cc-sep').value||'|';
-  const dedup=document.getElementById('cc-dedup').checked;
-  let r;
-  if(ccType==='xy'){
-    const s=parseInt(document.getElementById('cc-start').value)||1;
-    const e=parseInt(document.getElementById('cc-end').value)||1;
-    r=lines.map(l=>l.split(sep).slice(s-1,e).join(sep));
-  } else {
-    const pos=(document.getElementById('cc-positions').value||'1').split(',').map(x=>parseInt(x.trim())-1);
-    r=lines.map(l=>{const parts=l.split(sep);return pos.map(p=>parts[p]||'').join(sep);});
+function shuffleLines(inId, outId) {
+  const lines = getLines(inId);
+  for (let i = lines.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [lines[i], lines[j]] = [lines[j], lines[i]];
   }
-  if(dedup){const s=new Set();r=r.filter(x=>{if(s.has(x))return false;s.add(x);return true;});}
-  setResult('cc-result',r.join('\n'),'cc-cnt');
-  document.getElementById('cc-stats').innerHTML=`Ban đầu: <b>${lines.length}</b> dòng<br>Kết quả: <b>${r.length}</b> dòng`;
+  setResult(outId, lines.join('\n'));
 }
 
-// ─── CẮT LINE ─────────────────────────────────────────────────────────────
-function catLine(){
-  const lines=document.getElementById('cl-input').value.split('\n');
-  const f=parseInt(document.getElementById('cl-from').value)||1;
-  const t=parseInt(document.getElementById('cl-to').value)||10;
-  const r=lines.slice(f-1,t);
-  setResult('cl-result',r.join('\n'),'cl-cnt');
-}
-function catLineHead(){const n=parseInt(document.getElementById('cl-to').value)||10;const lines=document.getElementById('cl-input').value.split('\n');setResult('cl-result',lines.slice(0,n).join('\n'),'cl-cnt');}
-function catLineTail(){const n=parseInt(document.getElementById('cl-to').value)||10;const lines=document.getElementById('cl-input').value.split('\n');setResult('cl-result',lines.slice(-n).join('\n'),'cl-cnt');}
-function catLineOdd(){const lines=document.getElementById('cl-input').value.split('\n').filter(l=>l.trim());setResult('cl-result',lines.filter((_,i)=>i%2===0).join('\n'),'cl-cnt');}
-function catLineEven(){const lines=document.getElementById('cl-input').value.split('\n').filter(l=>l.trim());setResult('cl-result',lines.filter((_,i)=>i%2===1).join('\n'),'cl-cnt');}
+// ======================== SO SÁNH 2 LIST ========================
+let currentSslDisplay = 'both';
 
-// ─── GHÉP DÒNG ────────────────────────────────────────────────────────────
-function ghepDong(){
-  const lines=getLines('gd-input');
-  const sep=document.getElementById('gd-sep').value;
-  const n=parseInt(document.getElementById('gd-n').value)||0;
-  let r;
-  if(n>0){const chunks=[];for(let i=0;i<lines.length;i+=n)chunks.push(lines.slice(i,i+n).join(sep));r=chunks.join('\n');}
-  else r=lines.join(sep);
-  setResult('gd-result',r);
-}
-function ghepDongBy(s){document.getElementById('gd-sep').value=s;ghepDong();}
-
-// ─── TRÙNG LẶP (MỚI - GIỐNG ẢNH) ─────────────────────────────────────────
-function setTlAction(action, btnElement) {
-  currentTlAction = action;
-  document.querySelectorAll('#tl-action-group .radio-btn').forEach(btn => {
+function setSslDisplay(display, btnElement) {
+  currentSslDisplay = display;
+  document.querySelectorAll('#ssl-display-group .radio-btn').forEach(btn => {
     btn.classList.remove('active');
   });
   btnElement.classList.add('active');
+  const list1 = document.getElementById('ssl-list1').value.trim();
+  const list2 = document.getElementById('ssl-list2').value.trim();
+  if (list1 || list2) {
+    soSanhList();
+  }
 }
 
-function processTlDuplicate() {
-  // Lấy nội dung từ hai textarea
-  const linesA = getLines('tl-input-a');
-  const linesB = getLines('tl-input-b');
+function soSanhList() {
+  let rawList1 = document.getElementById('ssl-list1').value.split('\n');
+  let rawList2 = document.getElementById('ssl-list2').value.split('\n');
   
-  // Kiểm tra có dữ liệu không
-  if (linesA.length === 0 && linesB.length === 0) {
-    setResult('tl-result', '—', 'tl-cnt');
-    document.getElementById('tl-stat-a').textContent = '0';
-    document.getElementById('tl-stat-b').textContent = '0';
-    document.getElementById('tl-stat-dup').textContent = '0';
-    document.getElementById('tl-stat-result').textContent = '0';
-    document.getElementById('tl-extra-stats').innerHTML = '';
-    showToast('⚠️ Vui lòng nhập dữ liệu vào ít nhất một ô!');
-    return;
-  }
+  const trimEnabled = document.getElementById('ssl-trim').checked;
+  const caseSensitive = document.getElementById('ssl-case-sensitive').checked;
+  const dedupEnabled = document.getElementById('ssl-dedup').checked;
   
-  // Kiểm tra tùy chọn "Loại bỏ trùng lặp?" - xóa trùng trong nội bộ từng danh sách
-  const dedupEnabled = document.getElementById('tl-dedup').checked;
-  
-  let finalLinesA = linesA;
-  let finalLinesB = linesB;
+  let processedList1 = rawList1.map(l => trimEnabled ? l.trim() : l).filter(l => l !== '');
+  let processedList2 = rawList2.map(l => trimEnabled ? l.trim() : l).filter(l => l !== '');
   
   if (dedupEnabled) {
-    // Loại bỏ trùng lặp trong nội bộ từng danh sách (giữ thứ tự xuất hiện)
-    const seenA = new Set();
-    finalLinesA = linesA.filter(line => {
-      if (seenA.has(line)) return false;
-      seenA.add(line);
+    const seen1 = new Set();
+    processedList1 = processedList1.filter(l => {
+      const key = caseSensitive ? l : l.toLowerCase();
+      if (seen1.has(key)) return false;
+      seen1.add(key);
       return true;
     });
     
-    const seenB = new Set();
-    finalLinesB = linesB.filter(line => {
-      if (seenB.has(line)) return false;
-      seenB.add(line);
+    const seen2 = new Set();
+    processedList2 = processedList2.filter(l => {
+      const key = caseSensitive ? l : l.toLowerCase();
+      if (seen2.has(key)) return false;
+      seen2.add(key);
       return true;
     });
   }
   
-  // Tìm các dòng trùng nhau (giao nhau)
-  const setA = new Set(finalLinesA);
-  const setB = new Set(finalLinesB);
-  const duplicates = new Set();
+  const setList1 = new Set();
+  for (const line of processedList1) {
+    const key = caseSensitive ? line : line.toLowerCase();
+    setList1.add(key);
+  }
   
-  for (const line of setA) {
-    if (setB.has(line)) {
-      duplicates.add(line);
+  const duplicateLines = [];
+  const uniqueLines = [];
+  
+  for (const line of processedList2) {
+    const key = caseSensitive ? line : line.toLowerCase();
+    if (setList1.has(key)) {
+      duplicateLines.push(line);
+    } else {
+      uniqueLines.push(line);
     }
   }
   
+  let resultText = '';
   let resultLines = [];
   
-  if (currentTlAction === 'remove') {
-    // Bỏ dòng trùng: lấy A ∪ B, sau đó loại bỏ các dòng trùng
-    const union = new Set([...setA, ...setB]);
-    for (const line of union) {
-      if (!duplicates.has(line)) {
-        resultLines.push(line);
-      }
+  if (currentSslDisplay === 'both') {
+    if (duplicateLines.length > 0) {
+      resultLines.push('═══════════════════════════════════');
+      resultLines.push('  ✅ DÒNG TRÙNG (có trong List 1)');
+      resultLines.push('═══════════════════════════════════');
+      resultLines.push('');
+      resultLines.push(...duplicateLines);
+      resultLines.push('');
     }
+    if (uniqueLines.length > 0) {
+      resultLines.push('═══════════════════════════════════════');
+      resultLines.push('  ❌ DÒNG KHÔNG TRÙNG (chỉ có trong List 2)');
+      resultLines.push('═══════════════════════════════════════');
+      resultLines.push('');
+      resultLines.push(...uniqueLines);
+    }
+    if (duplicateLines.length === 0 && uniqueLines.length === 0) {
+      resultLines.push('(Không có dữ liệu để so sánh)');
+    }
+    resultText = resultLines.join('\n');
+  } else if (currentSslDisplay === 'duplicate') {
+    resultText = duplicateLines.length > 0 ? duplicateLines.join('\n') : '(Không có dòng trùng nào)';
   } else {
-    // Giữ dòng trùng: chỉ lấy các dòng xuất hiện trong cả A và B
-    resultLines = Array.from(duplicates);
+    resultText = uniqueLines.length > 0 ? uniqueLines.join('\n') : '(Tất cả dòng trong List 2 đều có trong List 1)';
   }
   
-  // Hiển thị kết quả
-  if (resultLines.length === 0) {
-    setResult('tl-result', '—', 'tl-cnt');
-  } else {
-    setResult('tl-result', resultLines.join('\n'), 'tl-cnt');
-  }
+  setResult('ssl-result', resultText, 'ssl-cnt');
   
-  // Cập nhật thống kê
-  document.getElementById('tl-stat-a').textContent = finalLinesA.length;
-  document.getElementById('tl-stat-b').textContent = finalLinesB.length;
-  document.getElementById('tl-stat-dup').textContent = duplicates.size;
-  document.getElementById('tl-stat-result').textContent = resultLines.length;
+  const dupCount = duplicateLines.length;
+  const uniqueCount = uniqueLines.length;
+  const totalList2 = processedList2.length;
+  const percentDup = totalList2 > 0 ? (dupCount / totalList2 * 100).toFixed(1) : 0;
   
-  // Thông báo thêm
-  if (currentTlAction === 'remove') {
-    document.getElementById('tl-extra-stats').innerHTML = `✨ Đã loại bỏ <b>${duplicates.size}</b> dòng trùng khỏi kết quả`;
-  } else {
-    document.getElementById('tl-extra-stats').innerHTML = `🔍 Chỉ giữ lại <b>${duplicates.size}</b> dòng xuất hiện trong cả hai danh sách`;
-  }
+  document.getElementById('ssl-stat-list1').textContent = processedList1.length;
+  document.getElementById('ssl-stat-list2').textContent = totalList2;
+  document.getElementById('ssl-stat-dup').textContent = dupCount;
+  document.getElementById('ssl-stat-unique').textContent = uniqueCount;
+  document.getElementById('ssl-percent-dup').textContent = percentDup + '%';
+  document.getElementById('ssl-percent-bar').style.width = percentDup + '%';
+  
+  let extraText = [];
+  if (dedupEnabled) extraText.push('🗑 Đã loại bỏ trùng lặp trong từng list');
+  if (caseSensitive) extraText.push('🔠 Phân biệt hoa/thường');
+  if (trimEnabled) extraText.push('✂️ Đã trim khoảng trắng');
+  document.getElementById('ssl-extra-stats').innerHTML = extraText.length ? extraText.join(' | ') : 'Không có tùy chọn đặc biệt nào được bật';
 }
 
-function clearTlAll() {
-  document.getElementById('tl-input-a').value = '';
-  document.getElementById('tl-input-b').value = '';
-  setResult('tl-result', '—', 'tl-cnt');
-  document.getElementById('tl-stat-a').textContent = '0';
-  document.getElementById('tl-stat-b').textContent = '0';
-  document.getElementById('tl-stat-dup').textContent = '0';
-  document.getElementById('tl-stat-result').textContent = '0';
-  document.getElementById('tl-extra-stats').innerHTML = '';
+function clearSslAll() {
+  document.getElementById('ssl-list1').value = '';
+  document.getElementById('ssl-list2').value = '';
+  setResult('ssl-result', '—', 'ssl-cnt');
+  document.getElementById('ssl-stat-list1').textContent = '0';
+  document.getElementById('ssl-stat-list2').textContent = '0';
+  document.getElementById('ssl-stat-dup').textContent = '0';
+  document.getElementById('ssl-stat-unique').textContent = '0';
+  document.getElementById('ssl-percent-dup').textContent = '0%';
+  document.getElementById('ssl-percent-bar').style.width = '0%';
+  document.getElementById('ssl-extra-stats').innerHTML = '';
   showToast('🗑 Đã xóa tất cả dữ liệu');
 }
 
-// ─── ĐẢO TỪ ──────────────────────────────────────────────────────────────
-function daoTu(type){
-  const v=document.getElementById('dt-input').value; if(!v) return;
-  let r=v;
-  if(type==='chars') r=v.split('').reverse().join('');
-  else if(type==='words') r=v.split(/\s+/).reverse().join(' ');
-  else if(type==='lines') r=v.split('\n').reverse().join('\n');
-  else if(type==='words-lines') r=v.split('\n').map(l=>l.split(/\s+/).reverse().join(' ')).join('\n');
-  else if(type==='shuffle-words'){const ws=v.split(/\s+/);for(let i=ws.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ws[i],ws[j]]=[ws[j],ws[i]];}r=ws.join(' ');}
-  setResult('dt-result',r);
+// ======================== COOKIE ========================
+function processCookie() {
+  let lines = getLines('cookie-input');
+  const sep = document.getElementById('cookie-sep').value || '|';
+  const key = document.getElementById('cookie-key').value.trim().toLowerCase();
+  const dedup = document.getElementById('cookie-dedup').checked;
+  if (dedup) {
+    const s = new Set();
+    lines = lines.filter(l => { if (s.has(l)) return false; s.add(l); return true; });
+  }
+  if (key) lines = lines.filter(l => l.toLowerCase().includes(key));
+  setResult('cookie-result', lines.join('\n'), 'cookie-cnt');
+  document.getElementById('cookie-stats').innerHTML = `Tổng: <b>${lines.length}</b> dòng`;
 }
 
-// ─── GHÉP CHUỖI ───────────────────────────────────────────────────────────
-function ghepChuoi(){
-  const a=getLines('gc-a'),b=getLines('gc-b');
-  const sep=document.getElementById('gc-sep').value;
-  const pre=document.getElementById('gc-prefix').value;
-  const suf=document.getElementById('gc-suffix').value;
-  const len=Math.max(a.length,b.length);
-  const r=[];
-  for(let i=0;i<len;i++) r.push(pre+(a[i]||'')+(a[i]&&b[i]?sep:'')+(b[i]||'')+suf);
-  setResult('gc-result',r.join('\n'),'gc-cnt');
-}
-function ghepChuoiCross(){
-  const a=getLines('gc-a'),b=getLines('gc-b');
-  const sep=document.getElementById('gc-sep').value;
-  const pre=document.getElementById('gc-prefix').value;
-  const suf=document.getElementById('gc-suffix').value;
-  const r=[];
-  a.forEach(av=>b.forEach(bv=>r.push(pre+av+sep+bv+suf)));
-  setResult('gc-result',r.join('\n'),'gc-cnt');
-}
-function addPrefixSuffix(inId,outId){
-  const lines=getLines(inId);
-  const pre=document.getElementById('gc-prefix').value;
-  const suf=document.getElementById('gc-suffix').value;
-  setResult(outId,lines.map(l=>pre+l+suf).join('\n'));
+function cookieExtract() {
+  const lines = getLines('cookie-input');
+  const pairs = [];
+  lines.forEach(l => {
+    const m = l.match(/[\w.-]+=[\w%.-]*/g);
+    if (m) pairs.push(...m);
+  });
+  setResult('cookie-result', [...new Set(pairs)].join('\n'), 'cookie-cnt');
 }
 
-// ─── CHIA CẮT DÒNG ────────────────────────────────────────────────────────
-function chiaCatDong(forceSep){
-  const v=document.getElementById('ccd-input').value;
-  const sep=forceSep!==undefined?forceSep:document.getElementById('ccd-sep').value;
-  const r=v.split(sep).map(s=>s.trim()).filter(Boolean);
-  setResult('ccd-result',r.join('\n'),'ccd-cnt');
+function cookieFormat() {
+  const lines = getLines('cookie-input');
+  const r = lines.map(l => l.split(/;\s*/).map(p => p.trim()).filter(Boolean).join('\n')).join('\n---\n');
+  setResult('cookie-result', r);
 }
 
-// ─── LỌC CHUỖI ───────────────────────────────────────────────────────────
-function locChuoi(type){
-  const lines=getLines('lc-input');
-  const kw=document.getElementById('lc-keyword').value;
-  const cs=document.getElementById('lc-case').checked;
-  const re=document.getElementById('lc-regex').checked;
-  if(!kw) return;
+// ======================== POMODORO ========================
+let pomoTimer = null, pomoSecs = 0, pomoTotal = 0, pomoCycles = 0, pomoShort = 0, pomoPhase = 'focus', pomoRunning = false;
+
+function pomoInit() {
+  const f = parseInt(document.getElementById('pomo-focus').value) || 25;
+  pomoTotal = pomoSecs = f * 60;
+  pomoPhase = 'focus';
+  document.getElementById('pomo-label').textContent = 'Tập trung 🎯';
+  pomoRender();
+}
+
+function pomoRender() {
+  const m = String(Math.floor(pomoSecs / 60)).padStart(2, '0');
+  const s = String(pomoSecs % 60).padStart(2, '0');
+  document.getElementById('pomo-time').textContent = `${m}:${s}`;
+  const pct = pomoTotal > 0 ? (pomoSecs / pomoTotal * 100) : 100;
+  document.getElementById('pomo-bar').style.width = pct + '%';
+}
+
+function pomoToggle() {
+  if (pomoRunning) {
+    clearInterval(pomoTimer);
+    pomoRunning = false;
+    document.getElementById('pomo-btn').textContent = '▶ Tiếp tục';
+  } else {
+    if (!pomoSecs) pomoInit();
+    pomoRunning = true;
+    document.getElementById('pomo-btn').textContent = '⏸ Tạm dừng';
+    pomoTimer = setInterval(() => {
+      pomoSecs--;
+      if (pomoSecs < 0) {
+        clearInterval(pomoTimer);
+        pomoRunning = false;
+        if (pomoPhase === 'focus') {
+          pomoCycles++;
+          document.getElementById('pomo-cycles').textContent = pomoCycles;
+          const la = parseInt(document.getElementById('pomo-long-after').value) || 4;
+          if (pomoCycles % la === 0) {
+            pomoTotal = pomoSecs = (parseInt(document.getElementById('pomo-break-l').value) || 15) * 60;
+            pomoPhase = 'long-break';
+            document.getElementById('pomo-label').textContent = 'Nghỉ dài ☕';
+          } else {
+            pomoTotal = pomoSecs = (parseInt(document.getElementById('pomo-break-s').value) || 5) * 60;
+            pomoPhase = 'short-break';
+            pomoShort++;
+            document.getElementById('pomo-short').textContent = pomoShort;
+            document.getElementById('pomo-label').textContent = 'Nghỉ ngắn 😌';
+          }
+        } else {
+          pomoTotal = pomoSecs = (parseInt(document.getElementById('pomo-focus').value) || 25) * 60;
+          pomoPhase = 'focus';
+          document.getElementById('pomo-label').textContent = 'Tập trung 🎯';
+        }
+        const log = document.getElementById('pomo-log');
+        const now = new Date().toLocaleTimeString('vi');
+        log.innerHTML += `${now}: Kết thúc ${pomoPhase === 'focus' ? 'nghỉ' : 'tập trung'}<br>`;
+        document.getElementById('pomo-btn').textContent = '▶ Bắt đầu';
+      }
+      pomoRender();
+    }, 1000);
+  }
+}
+
+function pomoReset() {
+  clearInterval(pomoTimer);
+  pomoRunning = false;
+  pomoSecs = 0;
+  pomoInit();
+  document.getElementById('pomo-btn').textContent = '▶ Bắt đầu';
+}
+pomoInit();
+
+// ======================== EDIT TEXT ========================
+function etStats() {
+  const v = document.getElementById('et-input').value;
+  document.getElementById('et-c').textContent = v.length;
+  document.getElementById('et-w').textContent = v.trim() ? v.trim().split(/\s+/).length : 0;
+  document.getElementById('et-l').textContent = v.split('\n').length;
+}
+
+function et(type) {
+  const v = document.getElementById('et-input').value;
+  if (!v) return;
+  let r = v;
+  if (type === 'upper') r = v.toUpperCase();
+  else if (type === 'lower') r = v.toLowerCase();
+  else if (type === 'title') r = v.replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase());
+  else if (type === 'sentence') r = v.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g, c => c.toUpperCase());
+  else if (type === 'camel') r = v.trim().replace(/[-_\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, c => c.toLowerCase());
+  else if (type === 'snake') r = v.trim().replace(/\s+/g, '_').replace(/([A-Z])/g, '_$1').replace(/^_/, '').toLowerCase();
+  else if (type === 'kebab') r = v.trim().replace(/\s+/g, '-').replace(/([A-Z])/g, '-$1').replace(/^-/, '').toLowerCase();
+  else if (type === 'trim') r = v.trim();
+  else if (type === 'trimlines') r = v.split('\n').map(l => l.trim()).join('\n');
+  else if (type === 'removespaces') r = v.replace(/[ \t]{2,}/g, ' ').trim();
+  else if (type === 'removeblank') r = v.split('\n').filter(l => l.trim()).join('\n');
+  else if (type === 'reverse') r = v.split('').reverse().join('');
+  else if (type === 'reverselines') r = v.split('\n').reverse().join('\n');
+  else if (type === 'sort') r = v.split('\n').sort((a, b) => a.localeCompare(b)).join('\n');
+  else if (type === 'sortz') r = v.split('\n').sort((a, b) => b.localeCompare(a)).join('\n');
+  else if (type === 'numbering') r = v.split('\n').map((l, i) => `${i + 1}. ${l}`).join('\n');
+  else if (type === 'strip-num') r = v.split('\n').map(l => l.replace(/^\d+\.\s*/, '')).join('\n');
+  document.getElementById('et-result').textContent = r;
+}
+
+function etFindReplace() {
+  const v = document.getElementById('et-input').value;
+  const f = document.getElementById('et-find').value;
+  if (!f) return;
+  const rep = document.getElementById('et-rep').value;
+  const isRe = document.getElementById('et-fr-re').checked;
+  const cs = document.getElementById('et-fr-cs').checked;
   let pat;
-  try{pat=re?new RegExp(kw,cs?'':'i'):null;}catch(e){showToast('❌ Regex lỗi');return;}
-  const test=l=>{
-    if(re) return pat.test(l);
-    const lw=cs?l:l.toLowerCase(),kw2=cs?kw:kw.toLowerCase();
-    if(type==='startswith') return lw.startsWith(kw2);
-    if(type==='endswith') return lw.endsWith(kw2);
+  try {
+    pat = isRe ? new RegExp(f, cs ? 'g' : 'gi') : new RegExp(f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), cs ? 'g' : 'gi');
+  } catch (e) {
+    showToast('❌ Regex lỗi');
+    return;
+  }
+  document.getElementById('et-result').textContent = v.replace(pat, rep);
+}
+
+// ======================== UID → YEAR ========================
+function uidConvert() {
+  const lines = getLines('uid-input');
+  const r = lines.map(uid => {
+    uid = uid.trim();
+    const n = parseInt(uid);
+    if (isNaN(n) || n <= 0) return `${uid} → ❌ UID không hợp lệ`;
+    const ms = (n / 4194304 + 1149955200) * 1000;
+    const d = new Date(ms);
+    return `${uid} → ${d.toLocaleDateString('vi-VN')} (${d.getFullYear()})`;
+  });
+  setResult('uid-result', r.join('\n'));
+}
+
+// ======================== CẮT CHUỖI ========================
+let ccType = 'xy';
+
+function ccSetType(t, el) {
+  ccType = t;
+  document.querySelectorAll('#cc-type-group .radio-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cc-xy-opts').style.display = t === 'xy' ? '' : 'none';
+  document.getElementById('cc-xyz-opts').style.display = t === 'xyz' ? '' : 'none';
+}
+
+function catChuoi() {
+  let lines = getLines('cc-input');
+  const sep = document.getElementById('cc-sep').value || '|';
+  const dedup = document.getElementById('cc-dedup').checked;
+  let r;
+  if (ccType === 'xy') {
+    const s = parseInt(document.getElementById('cc-start').value) || 1;
+    const e = parseInt(document.getElementById('cc-end').value) || 1;
+    r = lines.map(l => l.split(sep).slice(s - 1, e).join(sep));
+  } else {
+    const pos = (document.getElementById('cc-positions').value || '1').split(',').map(x => parseInt(x.trim()) - 1);
+    r = lines.map(l => { const parts = l.split(sep); return pos.map(p => parts[p] || '').join(sep); });
+  }
+  if (dedup) { const s = new Set(); r = r.filter(x => { if (s.has(x)) return false; s.add(x); return true; }); }
+  setResult('cc-result', r.join('\n'), 'cc-cnt');
+  document.getElementById('cc-stats').innerHTML = `Ban đầu: <b>${lines.length}</b> dòng<br>Kết quả: <b>${r.length}</b> dòng`;
+}
+
+// ======================== CẮT LINE ========================
+function catLine() {
+  const lines = document.getElementById('cl-input').value.split('\n');
+  const f = parseInt(document.getElementById('cl-from').value) || 1;
+  const t = parseInt(document.getElementById('cl-to').value) || 10;
+  const r = lines.slice(f - 1, t);
+  setResult('cl-result', r.join('\n'), 'cl-cnt');
+}
+
+function catLineHead() { const n = parseInt(document.getElementById('cl-to').value) || 10; const lines = document.getElementById('cl-input').value.split('\n'); setResult('cl-result', lines.slice(0, n).join('\n'), 'cl-cnt'); }
+function catLineTail() { const n = parseInt(document.getElementById('cl-to').value) || 10; const lines = document.getElementById('cl-input').value.split('\n'); setResult('cl-result', lines.slice(-n).join('\n'), 'cl-cnt'); }
+function catLineOdd() { const lines = document.getElementById('cl-input').value.split('\n').filter(l => l.trim()); setResult('cl-result', lines.filter((_, i) => i % 2 === 0).join('\n'), 'cl-cnt'); }
+function catLineEven() { const lines = document.getElementById('cl-input').value.split('\n').filter(l => l.trim()); setResult('cl-result', lines.filter((_, i) => i % 2 === 1).join('\n'), 'cl-cnt'); }
+
+// ======================== GHÉP DÒNG ========================
+function ghepDong() {
+  const lines = getLines('gd-input');
+  const sep = document.getElementById('gd-sep').value;
+  const n = parseInt(document.getElementById('gd-n').value) || 0;
+  let r;
+  if (n > 0) { const chunks = []; for (let i = 0; i < lines.length; i += n) chunks.push(lines.slice(i, i + n).join(sep)); r = chunks.join('\n'); }
+  else r = lines.join(sep);
+  setResult('gd-result', r);
+}
+
+function ghepDongBy(s) { document.getElementById('gd-sep').value = s; ghepDong(); }
+
+// ======================== TRÙNG LẶP ========================
+function trungLap(action) {
+  const lines = document.getElementById('tl-input').value.split('\n');
+  const cs = document.getElementById('tl-case').checked;
+  const trim = document.getElementById('tl-trim').checked;
+  const sort = document.getElementById('tl-sort').checked;
+  const key = l => trim ? (cs ? l.trim() : l.trim().toLowerCase()) : (cs ? l : l.toLowerCase());
+  const freq = {};
+  lines.forEach(l => { const k = key(l); freq[k] = (freq[k] || 0) + 1; });
+  let r;
+  if (action === 'remove') {
+    const seen = new Set();
+    r = lines.filter(l => { const k = key(l); if (seen.has(k)) return false; seen.add(k); return true; });
+  } else if (action === 'find') {
+    const seen = new Set(); const dup = new Set();
+    lines.forEach(l => { const k = key(l); if (seen.has(k)) dup.add(k); else seen.add(k); });
+    r = lines.filter(l => dup.has(key(l)));
+  } else {
+    r = Object.entries(freq).sort((a, b) => b[1] - a[1]).map(([k, c]) => `${c}x → ${k}`);
+  }
+  if (sort && action !== 'count') r.sort((a, b) => a.localeCompare(b));
+  const total = lines.filter(l => l.trim()).length;
+  setResult('tl-result', r.join('\n'), 'tl-cnt');
+  document.getElementById('tl-stats').innerHTML = `Ban đầu: <b>${total}</b><br>Kết quả: <b>${r.length}</b><br>Bỏ đi: <b>${total - r.length}</b>`;
+}
+
+// ======================== ĐẢO TỪ ========================
+function daoTu(type) {
+  const v = document.getElementById('dt-input').value;
+  if (!v) return;
+  let r = v;
+  if (type === 'chars') r = v.split('').reverse().join('');
+  else if (type === 'words') r = v.split(/\s+/).reverse().join(' ');
+  else if (type === 'lines') r = v.split('\n').reverse().join('\n');
+  else if (type === 'words-lines') r = v.split('\n').map(l => l.split(/\s+/).reverse().join(' ')).join('\n');
+  else if (type === 'shuffle-words') { const ws = v.split(/\s+/); for (let i = ws.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [ws[i], ws[j]] = [ws[j], ws[i]]; } r = ws.join(' '); }
+  setResult('dt-result', r);
+}
+
+// ======================== GHÉP CHUỖI ========================
+function ghepChuoi() {
+  const a = getLines('gc-a'), b = getLines('gc-b');
+  const sep = document.getElementById('gc-sep').value;
+  const pre = document.getElementById('gc-prefix').value;
+  const suf = document.getElementById('gc-suffix').value;
+  const len = Math.max(a.length, b.length);
+  const r = [];
+  for (let i = 0; i < len; i++) r.push(pre + (a[i] || '') + (a[i] && b[i] ? sep : '') + (b[i] || '') + suf);
+  setResult('gc-result', r.join('\n'), 'gc-cnt');
+}
+
+function ghepChuoiCross() {
+  const a = getLines('gc-a'), b = getLines('gc-b');
+  const sep = document.getElementById('gc-sep').value;
+  const pre = document.getElementById('gc-prefix').value;
+  const suf = document.getElementById('gc-suffix').value;
+  const r = [];
+  a.forEach(av => b.forEach(bv => r.push(pre + av + sep + bv + suf)));
+  setResult('gc-result', r.join('\n'), 'gc-cnt');
+}
+
+function addPrefixSuffix(inId, outId) {
+  const lines = getLines(inId);
+  const pre = document.getElementById('gc-prefix').value;
+  const suf = document.getElementById('gc-suffix').value;
+  setResult(outId, lines.map(l => pre + l + suf).join('\n'));
+}
+
+// ======================== CHIA CẮT DÒNG ========================
+function chiaCatDong(forceSep) {
+  const v = document.getElementById('ccd-input').value;
+  const sep = forceSep !== undefined ? forceSep : document.getElementById('ccd-sep').value;
+  const r = v.split(sep).map(s => s.trim()).filter(Boolean);
+  setResult('ccd-result', r.join('\n'), 'ccd-cnt');
+}
+
+// ======================== LỌC CHUỖI ========================
+function locChuoi(type) {
+  const lines = getLines('lc-input');
+  const kw = document.getElementById('lc-keyword').value;
+  const cs = document.getElementById('lc-case').checked;
+  const re = document.getElementById('lc-regex').checked;
+  if (!kw) return;
+  let pat;
+  try { pat = re ? new RegExp(kw, cs ? '' : 'i') : null; } catch (e) { showToast('❌ Regex lỗi'); return; }
+  const test = l => {
+    if (re) return pat.test(l);
+    const lw = cs ? l : l.toLowerCase(), kw2 = cs ? kw : kw.toLowerCase();
+    if (type === 'startswith') return lw.startsWith(kw2);
+    if (type === 'endswith') return lw.endsWith(kw2);
     return lw.includes(kw2);
   };
-  const r=lines.filter(l=>type==='exclude'?!test(l):test(l));
-  setResult('lc-result',r.join('\n'),'lc-cnt');
-}
-function locChuoiMulti(type){
-  const lines=getLines('lc-input');
-  const keywords=getLines('lc-multi');
-  if(!keywords.length) return;
-  let r;
-  if(type==='include') r=lines.filter(l=>keywords.some(k=>l.toLowerCase().includes(k.toLowerCase())));
-  else if(type==='exclude') r=lines.filter(l=>!keywords.some(k=>l.toLowerCase().includes(k.toLowerCase())));
-  else r=lines.filter(l=>keywords.every(k=>l.toLowerCase().includes(k.toLowerCase())));
-  setResult('lc-result',r.join('\n'),'lc-cnt');
+  const r = lines.filter(l => type === 'exclude' ? !test(l) : test(l));
+  setResult('lc-result', r.join('\n'), 'lc-cnt');
 }
 
-// ─── LỌC CHỮ ─────────────────────────────────────────────────────────────
-function locChu(type){
-  const lines=getLines('lch-input');
-  const custom=document.getElementById('lch-custom').value;
-  const r=lines.map(l=>{
-    if(type==='num') return l.replace(/\D/g,'');
-    if(type==='alpha') return l.replace(/[^a-zA-ZÀ-ỹ]/g,'');
-    if(type==='alphanum') return l.replace(/[^a-zA-Z0-9À-ỹ]/g,'');
-    if(type==='remove-num') return l.replace(/\d/g,'');
-    if(type==='remove-alpha') return l.replace(/[a-zA-ZÀ-ỹ]/g,'');
-    if(type==='remove-special') return l.replace(/[^a-zA-Z0-9\s]/g,'');
-    if(type==='remove-space') return l.replace(/\s/g,'');
-    if(type==='remove-emoji') return l.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,'');
-    if(type==='remove-url') return l.replace(/https?:\/\/[^\s]+/g,'');
-    if(type==='remove-html') return l.replace(/<[^>]*>/g,'');
-    if(type==='custom-remove'){const chars=[...custom];return l.split('').filter(c=>!chars.includes(c)).join('');}
-    if(type==='custom-keep'){const chars=[...custom];return l.split('').filter(c=>chars.includes(c)).join('');}
+function locChuoiMulti(type) {
+  const lines = getLines('lc-input');
+  const keywords = getLines('lc-multi');
+  if (!keywords.length) return;
+  let r;
+  if (type === 'include') r = lines.filter(l => keywords.some(k => l.toLowerCase().includes(k.toLowerCase())));
+  else if (type === 'exclude') r = lines.filter(l => !keywords.some(k => l.toLowerCase().includes(k.toLowerCase())));
+  else r = lines.filter(l => keywords.every(k => l.toLowerCase().includes(k.toLowerCase())));
+  setResult('lc-result', r.join('\n'), 'lc-cnt');
+}
+
+// ======================== LỌC CHỮ ========================
+function locChu(type) {
+  const lines = getLines('lch-input');
+  const custom = document.getElementById('lch-custom').value;
+  const r = lines.map(l => {
+    if (type === 'num') return l.replace(/\D/g, '');
+    if (type === 'alpha') return l.replace(/[^a-zA-ZÀ-ỹ]/g, '');
+    if (type === 'alphanum') return l.replace(/[^a-zA-Z0-9À-ỹ]/g, '');
+    if (type === 'remove-num') return l.replace(/\d/g, '');
+    if (type === 'remove-alpha') return l.replace(/[a-zA-ZÀ-ỹ]/g, '');
+    if (type === 'remove-special') return l.replace(/[^a-zA-Z0-9\s]/g, '');
+    if (type === 'remove-space') return l.replace(/\s/g, '');
+    if (type === 'remove-emoji') return l.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+    if (type === 'remove-url') return l.replace(/https?:\/\/[^\s]+/g, '');
+    if (type === 'custom-remove') { const chars = [...custom]; return l.split('').filter(c => !chars.includes(c)).join(''); }
+    if (type === 'custom-keep') { const chars = [...custom]; return l.split('').filter(c => chars.includes(c)).join(''); }
     return l;
   });
-  if(type==='extract-email') return setResult('lch-result',[...new Set(lines.join('\n').match(/[\w.+-]+@[\w-]+\.[\w.]+/g)||[])].join('\n'));
-  if(type==='extract-url') return setResult('lch-result',[...new Set(lines.join('\n').match(/https?:\/\/[^\s]+/g)||[])].join('\n'));
-  if(type==='extract-num') return setResult('lch-result',(lines.join('\n').match(/-?\d+\.?\d*/g)||[]).join('\n'));
-  if(type==='extract-phone') return setResult('lch-result',[...new Set(lines.join('\n').match(/(\+84|0)[0-9]{8,10}/g)||[])].join('\n'));
-  setResult('lch-result',r.join('\n'));
+  if (type === 'extract-email') return setResult('lch-result', [...new Set(lines.join('\n').match(/[\w.+-]+@[\w-]+\.[\w.]+/g) || [])].join('\n'));
+  if (type === 'extract-url') return setResult('lch-result', [...new Set(lines.join('\n').match(/https?:\/\/[^\s]+/g) || [])].join('\n'));
+  if (type === 'extract-num') return setResult('lch-result', (lines.join('\n').match(/-?\d+\.?\d*/g) || []).join('\n'));
+  if (type === 'extract-phone') return setResult('lch-result', [...new Set(lines.join('\n').match(/(\+84|0)[0-9]{8,10}/g) || [])].join('\n'));
+  setResult('lch-result', r.join('\n'));
 }
 
-// ─── COPY FILE (Set ops) ──────────────────────────────────────────────────
-function copyFile(type){
-  const a=new Set(getLines('cf-a')),b=new Set(getLines('cf-b'));
+// ======================== COPY FILE ========================
+function copyFile(type) {
+  const a = new Set(getLines('cf-a')), b = new Set(getLines('cf-b'));
   let r;
-  if(type==='diff-a') r=[...a].filter(x=>!b.has(x));
-  else if(type==='diff-b') r=[...b].filter(x=>!a.has(x));
-  else if(type==='intersect') r=[...a].filter(x=>b.has(x));
-  else if(type==='union') r=[...new Set([...a,...b])];
-  else r=[...a].filter(x=>b.has(x));
-  setResult('cf-result',r.join('\n'),'cf-cnt');
+  if (type === 'diff-a') r = [...a].filter(x => !b.has(x));
+  else if (type === 'diff-b') r = [...b].filter(x => !a.has(x));
+  else if (type === 'intersect') r = [...a].filter(x => b.has(x));
+  else r = [...new Set([...a, ...b])];
+  setResult('cf-result', r.join('\n'), 'cf-cnt');
 }
 
-// ─── ẢNH HTML ─────────────────────────────────────────────────────────────
-function genImgHTML(){
-  const lines=getLines('ah-input');
-  const alt=document.getElementById('ah-alt').value;
-  const w=document.getElementById('ah-width').value;
-  const h=document.getElementById('ah-height').value;
-  const cls=document.getElementById('ah-class').value;
-  const lazy=document.getElementById('ah-lazy').checked;
-  const r=lines.map(url=>{
-    let a=`src="${url.trim()}" alt="${alt}"`;
-    if(w) a+=` width="${w}"`;
-    if(h) a+=` height="${h}"`;
-    if(cls) a+=` class="${cls}"`;
-    if(lazy) a+=` loading="lazy"`;
-    return `<img ${a}>`;
+// ======================== ẢNH HTML ========================
+function genImgHTML() {
+  const lines = getLines('ah-input');
+  const r = lines.map(url => `<img src="${url.trim()}" alt="image">`);
+  setResult('ah-result', r.join('\n'));
+}
+
+function genFigureHTML() {
+  const lines = getLines('ah-input');
+  const r = lines.map(url => `<figure><img src="${url.trim()}" alt="image"><figcaption>Image</figcaption></figure>`);
+  setResult('ah-result', r.join('\n\n'));
+}
+
+// ======================== LINK HTML ========================
+function genLinkHTML() {
+  const lines = getLines('lh-input');
+  const r = lines.map(line => {
+    const [text, url] = line.split('|');
+    return `<a href="${url || '#'}" target="_blank">${text || 'Link'}</a>`;
   });
-  setResult('ah-result',r.join('\n'));
-}
-function genFigureHTML(){
-  const lines=getLines('ah-input');
-  const alt=document.getElementById('ah-alt').value;
-  const r=lines.map(url=>`<figure>\n  <img src="${url.trim()}" alt="${alt}" loading="lazy">\n  <figcaption>${alt}</figcaption>\n</figure>`);
-  setResult('ah-result',r.join('\n\n'));
+  setResult('lh-result', r.join('\n'));
 }
 
-// ─── LINK HTML ────────────────────────────────────────────────────────────
-function genLinkHTML(){
-  const lines=getLines('lh-input');
-  const target=document.getElementById('lh-target').value;
-  const norel=document.getElementById('lh-norel').checked;
-  const cls=document.getElementById('lh-class').value;
-  const r=lines.map(line=>{
-    const [text,...rest]=line.split('|');
-    const url=rest.join('|').trim()||'#';
-    let a=`href="${url}" target="${target}"`;
-    if(norel) a+=` rel="noopener noreferrer"`;
-    if(cls) a+=` class="${cls}"`;
-    return `<a ${a}>${text.trim()}</a>`;
+function genLinkList() {
+  const lines = getLines('lh-input');
+  const items = lines.map(line => {
+    const [text, url] = line.split('|');
+    return `  <li><a href="${url || '#'}" target="_blank">${text || 'Link'}</a></li>`;
   });
-  setResult('lh-result',r.join('\n'));
-}
-function genLinkList(){
-  const lines=getLines('lh-input');
-  const target=document.getElementById('lh-target').value;
-  const norel=document.getElementById('lh-norel').checked;
-  const items=lines.map(line=>{
-    const [text,...rest]=line.split('|');
-    const url=rest.join('|').trim()||'#';
-    let a=`href="${url}" target="${target}"`;
-    if(norel) a+=` rel="noopener noreferrer"`;
-    return `  <li><a ${a}>${text.trim()}</a></li>`;
-  });
-  setResult('lh-result',`<ul>\n${items.join('\n')}\n</ul>`);
+  setResult('lh-result', `<ul>\n${items.join('\n')}\n</ul>`);
 }
 
-// ─── LỌC CSV ──────────────────────────────────────────────────────────────
-function filterCSV(){
-  const lines=getLines('csv-input');
-  const filter=document.getElementById('csv-filter').value.toLowerCase();
-  const r=filter?lines.filter(l=>l.toLowerCase().includes(filter)):lines;
-  setResult('csv-result',r.join('\n'),'csv-cnt');
-}
-function csvExtractCols(){
-  const lines=getLines('csv-input');
-  const sep=document.getElementById('csv-sep-type').value;
-  const cols=(document.getElementById('csv-cols').value||'1').split(',').map(c=>parseInt(c.trim())-1);
-  const r=lines.map(l=>cols.map(c=>(l.split(sep))[c]||'').join(sep));
-  setResult('csv-result',r.join('\n'),'csv-cnt');
-}
-function csvToList(){const lines=getLines('csv-input');setResult('csv-result',lines.join('\n'),'csv-cnt');}
-function csvStats(){
-  const lines=getLines('csv-input');
-  if(!lines.length) return;
-  const sep=document.getElementById('csv-sep-type').value;
-  const cols=(lines[0].split(sep)).length;
-  setResult('csv-result',`Số dòng: ${lines.length}\nSố cột: ${cols}\nDòng đầu: ${lines[0]}`);
+// ======================== LỌC CSV ========================
+function filterCSV() {
+  const lines = getLines('csv-input');
+  const filter = document.getElementById('csv-filter')?.value.toLowerCase() || '';
+  const r = filter ? lines.filter(l => l.toLowerCase().includes(filter)) : lines;
+  setResult('csv-result', r.join('\n'), 'csv-cnt');
 }
 
-// ─── GHÉP FILE ────────────────────────────────────────────────────────────
-function ghepFile(){
-  const v=document.getElementById('gf-input').value;
-  const sep=document.getElementById('gf-sep').value||'---';
-  const parts=v.split(new RegExp(`^${sep.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\s*$`,'gm'));
-  let lines=parts.flatMap(p=>p.split('\n'));
-  if(document.getElementById('gf-empty').checked) lines=lines.filter(l=>l.trim());
-  if(document.getElementById('gf-dedup').checked){const s=new Set();lines=lines.filter(l=>{if(s.has(l))return false;s.add(l);return true;});}
-  setResult('gf-result',lines.join('\n'),'gf-cnt');
+function csvExtractCols() {
+  const lines = getLines('csv-input');
+  const cols = (document.getElementById('csv-cols')?.value || '1').split(',').map(c => parseInt(c.trim()) - 1);
+  const r = lines.map(l => cols.map(c => (l.split(',')[c] || '').trim()).join(','));
+  setResult('csv-result', r.join('\n'), 'csv-cnt');
 }
 
-// ─── JSON ─────────────────────────────────────────────────────────────────
-function fmtJSON(){
-  const v=document.getElementById('json-input').value.trim();
-  const ind=parseInt(document.getElementById('json-indent').value);
-  try{const o=JSON.parse(v);setResult('json-result',JSON.stringify(o,null,ind));document.getElementById('json-status').innerHTML='<span style="color:var(--accent3)">✅ Hợp lệ</span>';}
-  catch(e){document.getElementById('json-status').innerHTML=`<span style="color:var(--danger)">❌ ${e.message}</span>`;}
-}
-function minJSON(){try{setResult('json-result',JSON.stringify(JSON.parse(document.getElementById('json-input').value)));document.getElementById('json-status').innerHTML='<span style="color:var(--accent3)">✅ Minified</span>';}catch(e){document.getElementById('json-status').innerHTML=`<span style="color:var(--danger)">❌ ${e.message}</span>`;}}
-function valJSON(){try{JSON.parse(document.getElementById('json-input').value);document.getElementById('json-status').innerHTML='<span style="color:var(--accent3)">✅ JSON hợp lệ!</span>';}catch(e){document.getElementById('json-status').innerHTML=`<span style="color:var(--danger)">❌ ${e.message}</span>`;}}
-function jsonToList(){try{const o=JSON.parse(document.getElementById('json-input').value);setResult('json-result',Object.keys(o).join('\n'));}catch(e){showToast('❌ JSON lỗi');}}
-function jsonExtract(){try{const o=JSON.parse(document.getElementById('json-input').value);setResult('json-result',Object.values(o).map(v=>typeof v==='object'?JSON.stringify(v):String(v)).join('\n'));}catch(e){showToast('❌ JSON lỗi');}}
-
-// ─── LỌC TAG ──────────────────────────────────────────────────────────────
-function locTag(type){
-  const v=document.getElementById('lt-input').value;
-  const tag=document.getElementById('lt-tag').value.trim()||'a';
-  const attr=document.getElementById('lt-attr').value.trim()||'href';
-  let r=[];
-  if(type==='extract-content'){const re=new RegExp(`<${tag}[^>]*>([^<]*)<\/${tag}>`, 'gi');let m;while((m=re.exec(v))!==null) r.push(m[1]);}
-  else if(type==='extract-attr'){const re=new RegExp(`${attr}=["']([^"']+)["']`,'gi');let m;while((m=re.exec(v))!==null) r.push(m[1]);}
-  else if(type==='strip-all'){r=[v.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim()];}
-  else if(type==='strip-keep'){r=[v.replace(/<[^>]*>/g,'')];}
-  else if(type==='extract-links'){const re=/href=["']([^"']+)["']/gi;let m;while((m=re.exec(v))!==null) r.push(m[1]);}
-  else if(type==='extract-imgs'){const re=/src=["']([^"']+)["']/gi;let m;while((m=re.exec(v))!==null) r.push(m[1]);}
-  setResult('lt-result',r.join('\n'),'lt-cnt');
+// ======================== GHÉP FILE ========================
+function ghepFile() {
+  const v = document.getElementById('gf-input').value;
+  const sep = document.getElementById('gf-sep')?.value || '---';
+  const parts = v.split(new RegExp(`^${sep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'gm'));
+  let lines = parts.flatMap(p => p.split('\n'));
+  lines = lines.filter(l => l.trim());
+  setResult('gf-result', lines.join('\n'), 'gf-cnt');
 }
 
-// ─── TÍNH SUB ─────────────────────────────────────────────────────────────
-function tinhSub(){
-  const lines=getLines('ts-input');
-  const kw=document.getElementById('ts-keyword').value.toLowerCase();
-  const r=kw?lines.filter(l=>l.toLowerCase().includes(kw)):lines;
-  setResult('ts-result',`Tổng dòng: ${lines.length}\nDòng chứa "${kw}": ${r.length}\nKhông chứa: ${lines.length-r.length}`);
-}
-function tinhSubGroup(){
-  const lines=getLines('ts-input');
-  const sep=document.getElementById('ts-sep').value||'|';
-  const col=parseInt(document.getElementById('ts-col').value||1)-1;
-  const freq={};
-  lines.forEach(l=>{const k=(l.split(sep)[col]||'').trim();freq[k]=(freq[k]||0)+1;});
-  const r=Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([k,c])=>`${c}\t${k}`);
-  setResult('ts-result',r.join('\n'));
-}
-function tinhSubSum(){
-  const lines=getLines('ts-input');
-  const sep=document.getElementById('ts-sep').value||'|';
-  const col=parseInt(document.getElementById('ts-col').value||1)-1;
-  let sum=0,cnt=0;
-  lines.forEach(l=>{const v=parseFloat((l.split(sep)[col]||'').trim());if(!isNaN(v)){sum+=v;cnt++;}});
-  setResult('ts-result',`Số dòng hợp lệ: ${cnt}\nTổng: ${sum}\nTrung bình: ${cnt?+(sum/cnt).toFixed(4):0}`);
-}
-
-// ─── JOIN CHỮ ─────────────────────────────────────────────────────────────
-function joinChu(){
-  const lines=getLines('jc-input');
-  const pre=document.getElementById('jc-prefix').value;
-  const suf=document.getElementById('jc-suffix').value;
-  const wrap=document.getElementById('jc-wrap').value;
-  const r=lines.map(l=>{
-    let s=pre+l+suf;
-    if(wrap==='quote-single') s=`'${l}'`;
-    else if(wrap==='quote-double') s=`"${l}"`;
-    else if(wrap==='bracket') s=`[${l}]`;
-    else if(wrap==='paren') s=`(${l})`;
-    else if(wrap==='curly') s=`{${l}}`;
-    else s=pre+l+suf;
-    return s;
-  });
-  setResult('jc-result',r.join('\n'));
-}
-function joinChuSQL(){const lines=getLines('jc-input');setResult('jc-result',`IN (${lines.map(l=>`'${l}'`).join(',')})`);}
-function joinChuArray(){const lines=getLines('jc-input');setResult('jc-result',`["${lines.join('","')}"]`);}
-function joinChuPHP(){const lines=getLines('jc-input');setResult('jc-result',`["${lines.join('","')}"]`);}
-
-// ─── ACCOUNT ──────────────────────────────────────────────────────────────
-function processAcc(type){
-  const lines=getLines('ac-input');
-  const sep=document.getElementById('ac-sep').value||'|';
-  let r=[];
-  if(type==='user') r=lines.map(l=>l.split(sep)[0]||'');
-  else if(type==='pass') r=lines.map(l=>(l.split(sep)[1]||''));
-  else if(type==='swap') r=lines.map(l=>{const p=l.split(sep);return p.length>=2?`${p[1]}${sep}${p[0]}`:l;});
-  else if(type==='mask') r=lines.map(l=>{const p=l.split(sep);return p.length>=2?`${p[0]}${sep}${'*'.repeat(p[1].length)}`:l;});
-  else if(type==='check-email') r=lines.filter(l=>/^[^\s@]+@[^\s@]+\.[^\s@]+/.test(l.split(sep)[0]));
-  else if(type==='dedup'){const s=new Set();r=lines.filter(l=>{const k=l.split(sep)[0].toLowerCase();if(s.has(k))return false;s.add(k);return true;});}
-  else if(type==='stats'){
-    const freq={};
-    lines.forEach(l=>{const u=l.split(sep)[0]||'';const d=u.split('@')[1]||'other';freq[d]=(freq[d]||0)+1;});
-    r=Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([d,c])=>`${c}\t${d}`);
+// ======================== JSON ========================
+function fmtJSON() {
+  const v = document.getElementById('json-input').value.trim();
+  try {
+    const o = JSON.parse(v);
+    setResult('json-result', JSON.stringify(o, null, 2));
+    document.getElementById('json-status').innerHTML = '<span style="color:var(--accent3)">✅ Hợp lệ</span>';
+  } catch (e) {
+    document.getElementById('json-status').innerHTML = `<span style="color:var(--danger)">❌ ${e.message}</span>`;
   }
-  setResult('ac-result',r.join('\n'),'ac-cnt');
-}
-function filterDomain(){
-  const lines=getLines('ac-input');
-  const d=document.getElementById('ac-domain').value.toLowerCase();
-  if(!d) return;
-  const r=lines.filter(l=>l.toLowerCase().includes(d));
-  setResult('ac-domain-result',r.join('\n'));
-}
-function filterDomainExclude(){
-  const lines=getLines('ac-input');
-  const d=document.getElementById('ac-domain').value.toLowerCase();
-  if(!d) return;
-  const r=lines.filter(l=>!l.toLowerCase().includes(d));
-  setResult('ac-domain-result',r.join('\n'));
 }
 
-// ─── LOẠI TEXT ────────────────────────────────────────────────────────────
-function loaiText(type){
-  const v=document.getElementById('lx-input').value;
-  const lines=v.split('\n');
-  const words=v.trim()?v.trim().split(/\s+/):[];
-  let r='';
-  if(type==='all'){
-    const freq={};v.toLowerCase().match(/\b\w+\b/g)?.forEach(w=>freq[w]=(freq[w]||0)+1);
-    const top=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([w,c])=>`${c}x → ${w}`).join('\n');
-    r=`📊 Thống kê văn bản\n${'─'.repeat(30)}\nKý tự (có khoảng trắng): ${v.length}\nKý tự (không khoảng trắng): ${v.replace(/\s/g,'').length}\nSố từ: ${words.length}\nSố câu: ${(v.match(/[.!?]+/g)||[]).length}\nSố dòng: ${lines.length}\nDòng trống: ${lines.filter(l=>!l.trim()).length}\nThời gian đọc: ~${Math.ceil(words.length/200)} phút\n\n📌 Top 10 từ xuất hiện nhiều:\n${top}`;
+function valJSON() {
+  try {
+    JSON.parse(document.getElementById('json-input').value);
+    document.getElementById('json-status').innerHTML = '<span style="color:var(--accent3)">✅ JSON hợp lệ!</span>';
+  } catch (e) {
+    document.getElementById('json-status').innerHTML = `<span style="color:var(--danger)">❌ ${e.message}</span>`;
   }
-  else if(type==='count-lines') r=`Số dòng: ${lines.length}\nDòng có nội dung: ${lines.filter(l=>l.trim()).length}\nDòng trống: ${lines.filter(l=>!l.trim()).length}`;
-  else if(type==='count-words') r=`Số từ: ${words.length}`;
-  else if(type==='count-chars') r=`Tổng ký tự: ${v.length}\nKhông khoảng trắng: ${v.replace(/\s/g,'').length}\nChỉ chữ cái: ${(v.match(/[a-zA-ZÀ-ỹ]/g)||[]).length}\nChỉ số: ${(v.match(/\d/g)||[]).length}`;
-  else if(type==='freq-char'){const f={};[...v].forEach(c=>{if(c.trim())f[c]=(f[c]||0)+1;});r=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,30).map(([c,n])=>`'${c}': ${n}`).join('\n');}
-  else if(type==='freq-word'){const f={};(v.toLowerCase().match(/\b\w+\b/g)||[]).forEach(w=>f[w]=(f[w]||0)+1);r=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,30).map(([w,n])=>`${n}x → ${w}`).join('\n');}
-  else if(type==='readtime') r=`Thời gian đọc (200 từ/phút): ~${Math.ceil(words.length/200)} phút\nThời gian đọc nhanh (400 từ/phút): ~${Math.ceil(words.length/400)} phút`;
-  setResult('lx-result',r);
 }
 
-// ─── FB LINK ──────────────────────────────────────────────────────────────
-function fbLink(type){
-  const lines=getLines('fb-input');
-  const r=lines.map(l=>{
-    l=l.trim();
-    const uid=l.replace(/[^0-9]/g,'');
-    if(type==='uid-to-link') return `https://www.facebook.com/profile.php?id=${uid}`;
-    if(type==='uid-to-page') return `https://www.facebook.com/pg/${uid}`;
-    if(type==='link-to-uid'){const m=l.match(/\d{10,}/);return m?m[0]:`❌ Không tìm thấy UID trong: ${l}`;}
-    if(type==='profile-link') return `https://www.facebook.com/${uid||l}`;
-    if(type==='mbasic') return `https://mbasic.facebook.com/${uid||l}`;
-    if(type==='graph') return `https://graph.facebook.com/${uid||l}`;
-    if(type==='share') return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(l)}`;
+// ======================== LỌC TAG ========================
+function locTag(type) {
+  const v = document.getElementById('lt-input').value;
+  let r = [];
+  if (type === 'extract-links') {
+    const re = /href=["']([^"']+)["']/gi;
+    let m;
+    while ((m = re.exec(v)) !== null) r.push(m[1]);
+  } else if (type === 'strip-all') {
+    r = [v.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()];
+  }
+  setResult('lt-result', r.join('\n'), 'lt-cnt');
+}
+
+// ======================== TÍNH SUB ========================
+function tinhSub() {
+  const lines = getLines('ts-input');
+  const kw = document.getElementById('ts-keyword').value.toLowerCase();
+  const r = kw ? lines.filter(l => l.toLowerCase().includes(kw)) : lines;
+  setResult('ts-result', `Tổng dòng: ${lines.length}\nDòng chứa "${kw}": ${r.length}\nKhông chứa: ${lines.length - r.length}`);
+}
+
+// ======================== JOIN CHỮ ========================
+function joinChu() {
+  const lines = getLines('jc-input');
+  const pre = document.getElementById('jc-prefix').value;
+  const suf = document.getElementById('jc-suffix').value;
+  const r = lines.map(l => pre + l + suf);
+  setResult('jc-result', r.join('\n'));
+}
+
+function joinChuSQL() {
+  const lines = getLines('jc-input');
+  setResult('jc-result', `IN (${lines.map(l => `'${l}'`).join(',')})`);
+}
+
+// ======================== ACCOUNT ========================
+function processAcc(type) {
+  const lines = getLines('ac-input');
+  const sep = document.getElementById('ac-sep').value || '|';
+  let r = [];
+  if (type === 'user') r = lines.map(l => l.split(sep)[0] || '');
+  else if (type === 'pass') r = lines.map(l => (l.split(sep)[1] || ''));
+  else if (type === 'swap') r = lines.map(l => { const p = l.split(sep); return p.length >= 2 ? `${p[1]}${sep}${p[0]}` : l; });
+  setResult('ac-result', r.join('\n'), 'ac-cnt');
+}
+
+// ======================== LOẠI TEXT ========================
+function loaiText(type) {
+  const v = document.getElementById('lx-input').value;
+  const lines = v.split('\n');
+  const words = v.trim() ? v.trim().split(/\s+/) : [];
+  let r = '';
+  if (type === 'all') {
+    r = `📊 Thống kê văn bản\n${'─'.repeat(30)}\nKý tự (có khoảng trắng): ${v.length}\nKý tự (không khoảng trắng): ${v.replace(/\s/g, '').length}\nSố từ: ${words.length}\nSố câu: ${(v.match(/[.!?]+/g) || []).length}\nSố dòng: ${lines.length}\nDòng trống: ${lines.filter(l => !l.trim()).length}`;
+  } else if (type === 'count-lines') r = `Số dòng: ${lines.length}\nDòng có nội dung: ${lines.filter(l => l.trim()).length}\nDòng trống: ${lines.filter(l => !l.trim()).length}`;
+  else if (type === 'count-words') r = `Số từ: ${words.length}`;
+  else if (type === 'count-chars') r = `Tổng ký tự: ${v.length}\nKhông khoảng trắng: ${v.replace(/\s/g, '').length}`;
+  setResult('lx-result', r);
+}
+
+// ======================== FB LINK ========================
+function fbLink(type) {
+  const lines = getLines('fb-input');
+  const r = lines.map(l => {
+    l = l.trim();
+    const uid = l.replace(/[^0-9]/g, '');
+    if (type === 'uid-to-link') return `https://www.facebook.com/profile.php?id=${uid}`;
+    if (type === 'link-to-uid') { const m = l.match(/\d{10,}/); return m ? m[0] : `❌ Không tìm thấy UID trong: ${l}`; }
+    if (type === 'mbasic') return `https://mbasic.facebook.com/${uid || l}`;
     return l;
   });
-  setResult('fb-result',r.join('\n'));
+  setResult('fb-result', r.join('\n'));
 }
 </script>
 </body>
